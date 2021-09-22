@@ -1,56 +1,25 @@
 package locadora;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class TelaAddCategoria {
-
-	private JFrame frmAdicionarCategoria;
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					TelaAddCategoria window = new TelaAddCategoria();
-					window.frmAdicionarCategoria.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public TelaAddCategoria() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frmAdicionarCategoria = new JFrame();
-		frmAdicionarCategoria.setTitle("Adicionar Categoria");
-		frmAdicionarCategoria.setBounds(100, 100, 450, 90);
-		frmAdicionarCategoria.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmAdicionarCategoria.getContentPane().setLayout(null);
+	
+	public TelaAddCategoria(JInternalFrame frmAdicionarCategoria) {
 		
 		JLabel lblNewLabel = new JLabel("Categoria:");
 		lblNewLabel.setToolTipText("Digite a categoria para adicionar ao Banco de Dados");
 		lblNewLabel.setBounds(10, 11, 55, 14);
 		frmAdicionarCategoria.getContentPane().add(lblNewLabel);
 		
-		textField = new JTextField();
+		JTextField textField = new JTextField();
 		textField.setBounds(63, 8, 163, 20);
 		frmAdicionarCategoria.getContentPane().add(textField);
 		textField.setColumns(10);
@@ -60,8 +29,18 @@ public class TelaAddCategoria {
 		frmAdicionarCategoria.getContentPane().add(add);
 		
 		JButton cancelar = new JButton("Cancelar");
+		cancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frmAdicionarCategoria.dispose();
+				
+			}});
+		
 		cancelar.setBounds(335, 7, 89, 23);
 		frmAdicionarCategoria.getContentPane().add(cancelar);
+		
+		frmAdicionarCategoria.setVisible(true);
+		frmAdicionarCategoria.repaint();	
 	}
 
 }
