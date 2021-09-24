@@ -50,4 +50,5 @@ public abstract class Conexao
 		//operações abstratas para inclusão,consulta,exclusão e alteração no BD
 		//devem ser implementadas nas subclasses de Conexao
 		public abstract void incluirDB(Object obj);
+		public abstract Object consultarDB(Object obj);
 }

@@ -1,6 +1,9 @@
 package telas;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,11 +21,27 @@ import javax.swing.JLayeredPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
+import javax.swing.ImageIcon;
+import java.awt.Color;
+import javax.swing.JTabbedPane;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JSlider;
 
-public class Telaprincipal {
+
+public class Telaprincipal extends JFrame{
+	
+	private static final long serialVersionUID = 5786835960596750539L;
 
 	private JFrame frmGerenciadorDeLocadora;
-
+	private static String imgLink ="D:\\Documentos\\Escola\\Sistemas de Informa\u00E7\u00E3o\\Quarto per\u00EDodo\\Programa\u00E7\u00E3o Orientada a Objetos\\Locadora\\imagens\\wallpaper.jpg";
+	private JTextField textField;
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -52,58 +71,20 @@ public class Telaprincipal {
 	private void initialize() {
 		frmGerenciadorDeLocadora = new JFrame();
 		frmGerenciadorDeLocadora.setTitle("Gerenciador de Locadora de games digitais");
-		frmGerenciadorDeLocadora.setBounds(100, 100, 600, 400);
+		frmGerenciadorDeLocadora.setBounds(100, 100, 800, 600);
 		frmGerenciadorDeLocadora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmGerenciadorDeLocadora.getContentPane().setLayout(null);
+		frmGerenciadorDeLocadora.getContentPane().setLayout(null);		
 		
-		// Tela para cadastro de Jogos
-		JInternalFrame cadastrojogos = new JInternalFrame("Cadastrar Jogos");
-		cadastrojogos.setClosable(true);
-		cadastrojogos.setBounds(10, 33, 564, 175);
-		frmGerenciadorDeLocadora.getContentPane().add(cadastrojogos);
-		cadastrojogos.getContentPane().setLayout(null);
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(0, 0, 784, 561);
+		frmGerenciadorDeLocadora.getContentPane().add(tabbedPane);
 		
-		//Tela para adicionar Categoria
-		JInternalFrame addcategoria = new JInternalFrame("Adicionar Categoria");
-		addcategoria.setClosable(true);
-		addcategoria.setBounds(10, 33, 564, 120);
-		frmGerenciadorDeLocadora.getContentPane().add(addcategoria);
-		addcategoria.getContentPane().setLayout(null);
+		new TabAddJogo(tabbedPane);
+		new TabAddCategoria (tabbedPane);
 		
-		//Menu
-		JMenuBar mainmenu = new JMenuBar();
-		mainmenu.setBounds(0, 0, 137, 22);
-		frmGerenciadorDeLocadora.getContentPane().add(mainmenu);
 		
-		JMenu iniciar = new JMenu("Iniciar");
-		mainmenu.add(iniciar);
 		
-		JMenuItem jogos = new JMenuItem("Cadastrar jogos");
-		iniciar.add(jogos);
-		jogos.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {						
-				TelaCadastroJogo ObjTela = new TelaCadastroJogo(cadastrojogos);				
-				
-		}});	
 		
-		JMenuItem plataforma = new JMenuItem("Adicionar plataforma");
-		iniciar.add(plataforma);
-		
-		JMenuItem categoria = new JMenuItem("Adicionar categoria");
-		iniciar.add(categoria);
-		categoria.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				TelaAddCategoria ObjTela = new TelaAddCategoria(addcategoria);					
-			}});
 
-		JMenuItem conta = new JMenuItem("Cadastrar conta com jogos");
-		iniciar.add(conta);
-		
-		JMenuItem funcionario = new JMenuItem("Cadastrar funcionário");
-		iniciar.add(funcionario);		
-		
 	}	
-	
 }
