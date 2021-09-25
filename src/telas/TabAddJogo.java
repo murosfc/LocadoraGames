@@ -19,10 +19,7 @@ public class TabAddJogo {
 	private JTextField titulo;
 	private JTextField sku;
 	private JTextField valor;
-	private JTextField imgurl;
-	
-	//imagem de fundo no final de tudo
-	private final JLabel background = new JLabel("");
+	private JTextField imgurl;	
 	
 	public TabAddJogo(JTabbedPane tabbedPane)
 	{		
@@ -139,7 +136,8 @@ public class TabAddJogo {
 		clear.setBounds(683, 466, 52, 42);
 		tabJogo.add(clear);
 		
-		//imagem de fundo		
+		//imagem de fundo	
+		JLabel background = new JLabel("");
 		background.setIcon(new ImageIcon(TabAddJogo.class.getResource("/imagens/background.png")));
 		background.setBounds(0, 0, 779, 553);
 		tabJogo.add(background);		

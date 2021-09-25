@@ -41,5 +41,5 @@ public class Plataforma {
 		else {
 			AtribRefDBPlat.incluirDB(this);
 		}
-	}
+	}	
 }

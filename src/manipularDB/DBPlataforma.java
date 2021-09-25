@@ -6,11 +6,15 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
+import com.mysql.cj.jdbc.result.ResultSetMetaData;
+
 import objetos.Plataforma;
 
 public class DBPlataforma extends Conexao
 {
 	
+	private String[] nomes;
+
 	//método de inclusão no DB
 	public void incluirDB(Object obj)
 	{
@@ -40,7 +44,7 @@ public class DBPlataforma extends Conexao
 	//método de consulta ao BD
 	public Plataforma consultarDB(Object obj)
 	{
-		Plataforma ObjPlat = (Plataforma) obj;
+		Plataforma ObjPlat = (Plataforma) obj;		
 		try
         {   
 			Statement statement = getConnection().createStatement();
@@ -48,7 +52,8 @@ public class DBPlataforma extends Conexao
             String mysqlQuery = "SELECT nome FROM Plataforma where nome = '"+ObjPlat.getNome()+"'";
             System.out.println("Enviando código SQL: " + getConnection().nativeSQL(mysqlQuery));
             
-            ResultSet result = statement.executeQuery(mysqlQuery);
+            ResultSet result = statement.executeQuery(mysqlQuery);         
+            
             if (result.next())
             {
             	System.out.println("A Plataforma "+ObjPlat.getNome()+" já está cadastrada");
@@ -57,19 +62,21 @@ public class DBPlataforma extends Conexao
             }
             else 
             {
-            	System.out.println("Plataforma "+ObjPlat.getNome()+" não enontrada");
-            	ObjPlat = null;
+            	System.out.println("Plataforma "+ObjPlat.getNome()+" não encontrada");            	
             }
             statement.close();
         }
 		catch (SQLException e)
-		{ System.out.println("Há um problema com a consulta de plataforma no Banco de dados SQL"); }
+		{ System.out.println("Há um problema com a consulta de plataforma no Banco de dados SQL"); }	
+		System.out.println("Nomes: "+nomes);
 		return ObjPlat;
 	}   
+	
+}
             
         
 		
 	
-}
+
 
 

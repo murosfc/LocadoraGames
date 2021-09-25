@@ -80,11 +80,10 @@ public class Telaprincipal extends JFrame{
 		frmGerenciadorDeLocadora.getContentPane().add(tabbedPane);
 		
 		new TabAddJogo(tabbedPane);
-		new TabAddCategoria (tabbedPane);
-		
-		
-		
-		
+		new TabAddCatPlat (tabbedPane);
+		new TabAddFuncionario (tabbedPane);	
+		new TabAddConta (tabbedPane);
+		new TabUpdSenha (tabbedPane);
 
 	}	
 }
