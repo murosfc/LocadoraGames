@@ -13,8 +13,13 @@ public class Plataforma {
 	public Plataforma(String name)
 	{
 		this.nome=name;
-		AtribRefDBPlat = new DBPlataforma();
-		
+		AtribRefDBPlat = new DBPlataforma();		
+		AtribRefDBPlat.conectarDB();
+	}
+	
+	public Plataforma()
+	{	
+		AtribRefDBPlat = new DBPlataforma();		
 		AtribRefDBPlat.conectarDB();
 	}
 
@@ -42,4 +47,22 @@ public class Plataforma {
 			AtribRefDBPlat.incluirDB(this);
 		}
 	}
+	public String[] listarDB()
+	{
+		String[] lista = AtribRefDBPlat.listarDB();
+		return lista;
+	}
+	
+	public void exluirDB(int id)
+	{
+		if (id >=1)
+		{
+			AtribRefDBPlat.excluirDB(id);
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Selecione um item para exluir do DB");
+		}
+	}
+	
 }

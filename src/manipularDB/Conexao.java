@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.swing.table.DefaultTableModel;
+
 public abstract class Conexao 
 {
 	protected static Connection con;
@@ -49,6 +51,9 @@ public abstract class Conexao
 		
 		//operações abstratas para inclusão,consulta,exclusão e alteração no BD
 		//devem ser implementadas nas subclasses de Conexao
-		public abstract void incluirDB(Object obj);
-		public abstract Object consultarDB(Object obj);
+		public abstract void incluirDB(Object obj, String tipo);
+		public abstract Object consultarDB(Object obj, String tipo );
+		public abstract String[] listarDB(String tipo);
+		public abstract void excluirDB(int id, String tipo);
+		public abstract boolean listarBD(String tipo, DefaultTableModel tabela, String busca); //para busca de tabela de jogos
 }
