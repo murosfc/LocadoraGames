@@ -118,8 +118,7 @@ public class DBCatPlat extends Conexao {
 			System.out.println("Erro tentar excluir "+ catplat +" do banco de dados. Erro: "+e);
 		}
 	}
-
-	@Override
+	
 	public boolean listarBD(String tipo, DefaultTableModel tabela, String busca) {
 		// TODO Auto-generated method stub
 		return false;

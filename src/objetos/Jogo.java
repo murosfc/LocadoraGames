@@ -67,6 +67,11 @@ public class Jogo {
 	
 	}
 	
+	public void listarDB(String tipo, DefaultTableModel tabela, int id)
+	{
+		AtribRefDBJogo.listarBD(tipo, tabela, id);
+	}
+	
 
 }
 

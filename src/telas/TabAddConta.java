@@ -12,11 +12,13 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import objetos.Conta;
 import objetos.Jogo;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -63,7 +65,7 @@ public class TabAddConta {
 		panel.add(lblNewLabel_2);
 		
 		JTextField jogoProcurado = new JTextField();
-		jogoProcurado.setToolTipText("Busque pelo t\u00EDtulo");
+		jogoProcurado.setToolTipText("Busque pelo t\u00EDtulo. Ou deixe em branco para retornar todos os resultados");
 		jogoProcurado.setBounds(284, 118, 220, 20);
 		panel.add(jogoProcurado);
 		jogoProcurado.setColumns(50);		
@@ -89,9 +91,9 @@ public class TabAddConta {
 		JButton buscarJogo = new JButton("");
 		buscarJogo.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/busca.png")));
 		buscarJogo.setBounds(514, 107, 52, 42);
-		buscarJogo.addActionListener(new ActionListener() {
-			@Override
+		buscarJogo.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
+				table.setRowCount(0);
 				String busca = jogoProcurado.getText();
 				Jogo ObjJogo = new Jogo();
 				if (ObjJogo.listarBD("jogo", table, busca))
@@ -99,33 +101,75 @@ public class TabAddConta {
 					notFound.setVisible(false);
 				}
 				else notFound.setVisible(true);
-			}
-			
-		});
+			}});
 		panel.add(buscarJogo);
 		
 		JButton add = new JButton("");
 		add.setToolTipText("Incluir conta");
 		add.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
 		add.setBounds(492, 467, 52, 42);
+		add.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//System.out.println(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString());
+				try {
+					if (!email.getText().equals("") && !senha.getText().equals("") && !tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString().equals(""))
+					{
+						
+						Conta ObjConta = new Conta(email.getText(), senha.getText(), Integer.parseInt(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString()));
+						ObjConta.incluirDB(ObjConta, "conta");
+					}
+				}
+				catch (Exception erro)
+				{
+					JOptionPane.showMessageDialog(null, "Selecione um jogo para adicionar à conta","Mensagem de Erro",JOptionPane.ERROR_MESSAGE);
+					System.err.println("Erro: "+erro.getMessage());
+				}
+			}});
 		panel.add(add);
 		
 		JButton clear = new JButton("");
 		clear.setToolTipText("Limpar Campos");
 		clear.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/reset.png")));
 		clear.setBounds(554, 467, 52, 42);
+		clear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				table.setRowCount(0);
+				senha.setText("");
+				email.setText("");
+				jogoProcurado.setText("");
+			}});
 		panel.add(clear);		
 		
 		JButton excluir = new JButton("");
 		excluir.setToolTipText("Excluir conta");
 		excluir.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/del.png")));
 		excluir.setBounds(678, 467, 52, 42);
+		excluir.addActionListener(new ActionListener() {			
+			public void actionPerformed(ActionEvent e) {
+				if (consultarConta(notFound, email, senha, table))
+				{
+					int opcaoSelecionada = JOptionPane.showConfirmDialog (null, "Tem certeza que quer excluir a conta com e-mail: "+email.getText()+"?","Warning",JOptionPane.YES_NO_OPTION);
+					if(opcaoSelecionada == JOptionPane.YES_OPTION)
+					{
+					  Conta ObjConta = new Conta(email.getText(), senha.getText());
+					  ObjConta.excluirDB("conta");
+					  table.setRowCount(0);
+					  senha.setText("");
+					  email.setText("");
+					  jogoProcurado.setText("");
+					}
+				}				
+			}});
 		panel.add(excluir);	
 		
 		JButton buscarConta = new JButton("");
 		buscarConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/busca.png")));
 		buscarConta.setToolTipText("Buscar Conta");
-		buscarConta.setBounds(616, 467, 52, 42);		
+		buscarConta.setBounds(616, 467, 52, 42);
+		buscarConta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				consultarConta(notFound, email, senha, table);
+				}});
 		panel.add(buscarConta);
 		
 		//imagem de fundo
@@ -134,4 +178,33 @@ public class TabAddConta {
 		background.setBounds(0, 0, 779, 553);
 		panel.add(background);
 	}
+	
+	//método para buscar conta já cadastrada
+	private boolean consultarConta(JLabel notFound, JTextField email, JTextField senha, DefaultTableModel table)
+	{
+		notFound.setVisible(false);
+		if (email.getText().equals(""))
+		{
+			JOptionPane.showInternalMessageDialog(null, "Digite um e-mail para prosseguir");			
+		}
+		else {
+			Conta ObjConta = new Conta (email.getText(), senha.getText());		
+			if (ObjConta.consultarDB() == null)
+			{
+				notFound.setVisible(true);				
+			}
+			else
+			{
+			email.setText(ObjConta.getEmail());
+			senha.setText(ObjConta.getSenha());	
+			table.setRowCount(0);
+			Jogo ObjJogo = new Jogo();
+			ObjJogo.listarDB("jogo", table, ObjConta.getIdJogo());
+			return true;
+			}
+		}
+		return false;
+	}
+	
 }
+
