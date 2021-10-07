@@ -73,7 +73,8 @@ public class Telaprincipal extends JFrame{
 		frmGerenciadorDeLocadora.setTitle("Gerenciador de Locadora de games digitais");
 		frmGerenciadorDeLocadora.setBounds(100, 100, 800, 600);
 		frmGerenciadorDeLocadora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmGerenciadorDeLocadora.getContentPane().setLayout(null);		
+		frmGerenciadorDeLocadora.getContentPane().setLayout(null);
+		frmGerenciadorDeLocadora.setResizable(false);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 784, 561);

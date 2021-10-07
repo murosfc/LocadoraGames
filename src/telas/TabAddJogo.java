@@ -11,6 +11,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import objetos.CatPlat;
+
 import java.awt.Color;
 import java.awt.Font;
 
@@ -81,9 +83,10 @@ public class TabAddJogo {
 		lblNewLabel_4.setBounds(45, 134, 86, 14);
 		tabJogo.add(lblNewLabel_4);
 		
-		JComboBox comboBox = new JComboBox();
+		CatPlat ObjPlat = new CatPlat();
+		JComboBox comboBox = new JComboBox(ObjPlat.listarDB("plataforma"));
 		comboBox.setToolTipText("Selecione a plataforma");
-		comboBox.setBounds(141, 130, 30, 22);
+		comboBox.setBounds(141, 130, 200, 20);
 		comboBox.setMaximumRowCount(5);
 		tabJogo.add(comboBox);
 		

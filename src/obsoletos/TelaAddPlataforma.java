@@ -9,7 +9,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import objetos.Plataforma;
+import objetos.CatPlat;
 
 import javax.swing.JButton;
 
@@ -32,7 +32,7 @@ public class TelaAddPlataforma {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Plataforma ObjPlat = new Plataforma(textField.getText());
+				CatPlat ObjPlat = new CatPlat(textField.getText());
 				System.out.println("Conteúdo da caixa "+textField.getText());
 				ObjPlat.incluirDB();
 			}

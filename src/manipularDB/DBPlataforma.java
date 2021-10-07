@@ -6,8 +6,6 @@ import java.sql.Statement;
 
 import javax.swing.JOptionPane;
 
-import com.mysql.cj.jdbc.result.ResultSetMetaData;
-
 import objetos.Plataforma;
 
 public class DBPlataforma extends Conexao
@@ -56,13 +54,13 @@ public class DBPlataforma extends Conexao
             
             if (result.next())
             {
-            	System.out.println("A Plataforma "+ObjPlat.getNome()+" já está cadastrada");
-            	
+            	System.out.println("A Plataforma "+ObjPlat.getNome()+" já está cadastrada");            	
             	ObjPlat.setNome(result.getString("nome"));
             }
             else 
             {
-            	System.out.println("Plataforma "+ObjPlat.getNome()+" não encontrada");            	
+            	System.out.println("Plataforma "+ObjPlat.getNome()+" não encontrada");
+            	ObjPlat=null;
             }
             statement.close();
         }
@@ -70,8 +68,57 @@ public class DBPlataforma extends Conexao
 		{ System.out.println("Há um problema com a consulta de plataforma no Banco de dados SQL"); }	
 		System.out.println("Nomes: "+nomes);
 		return ObjPlat;
-	}   
+	} 	
 	
+	public String[] listarDB()	{		
+		try
+		{
+			Statement statement = getConnection().createStatement();
+			String mysqlQuery = "SELECT * FROM Plataforma";
+			
+			 ResultSet result = statement.executeQuery(mysqlQuery);
+			 result.last(); //move para última linha do resultado
+			 String [] lista = new String[result.getRow()]; //cria array de string do tamanho do result
+			 System.out.println("Numero de plataformas cadastradas = "+result.getRow());
+			 result.beforeFirst(); //retorna para o primeiro item do result
+			 int i=0;
+			 
+			 while (result.next())
+			 {
+				 lista[i] = result.getString("id")+"- "+result.getString("nome");
+				 i++;
+			 }
+			 return lista;
+		}
+		 catch (SQLException e)	 
+		 {
+			 System.out.println("Erro ao obter dados de plataformas do banco de dados");
+		 }		 
+		 return null;	
+	} 
+	public void excluirDB(int id)
+	{
+		try
+		{
+			Statement statement = getConnection().createStatement();
+			String mysqlQuery = "SELECT * FROM plataforma WHERE id="+id;			
+			ResultSet result = statement.executeQuery(mysqlQuery);
+			
+			if(result.next())
+			{
+				String plataforma = result.getString("nome");				
+				mysqlQuery = "DELETE FROM plataforma WHERE id="+id;								
+				statement.executeUpdate(mysqlQuery);
+				JOptionPane.showMessageDialog(null, "Plataforma "+plataforma+" excluída com sucesso");
+			}
+			else JOptionPane.showMessageDialog(null, "Não foi possível excluir a plataforma selecionada");
+			
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+		}
+	}
 }
             
         
