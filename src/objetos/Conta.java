@@ -1,6 +1,9 @@
 package objetos;
 
-import java.util.Optional;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import manipularDB.DBConta;
 
@@ -66,21 +69,58 @@ public class Conta {
 		AtribRefDBConta = new DBConta();
 	}
 	
-	//demais métodos
-	public Object consultarDB()
+	//demais métodos	
+	public void excluirDB()
 	{
-		return AtribRefDBConta.consultarDB(this, "conta");
-	}
-	
-	public void excluirDB(String tipo)
-	{
-		Conta ObjTempConta = (Conta) AtribRefDBConta.consultarDB(this, tipo);
-		AtribRefDBConta.excluirDB(ObjTempConta.getIdJogo(), tipo);
-	}
-	
+		AtribRefDBConta.excluirDB(this.getEmail());
+	}	
+
 	public void incluirDB(Object obj, String tipo) {
-		AtribRefDBConta.incluirDB(obj, tipo);
+		AtribRefDBConta.incluirDB(obj);
+	}	
+	
+	public boolean preencheTabelaContaTrocarSenha (String emailProcurado, DefaultTableModel tabela)
+	{
+		return AtribRefDBConta.preencheTabelaContaTrocarSenha (emailProcurado, tabela);
 	}
 	
+	public void AtualizarSenhaConta(int idConta, String senha) 
+	{
+		AtribRefDBConta.AtualizarSenhaConta(idConta, senha);
+	}
+	
+	public Object consultarDB(Object obj) {
+		return AtribRefDBConta.consultarDB(this);
+	}
+	
+	public void preecheTabelaPrioridades (DefaultTableModel tabela)
+	{
+		AtribRefDBConta.preecheTabelaPrioridades(tabela);
+	}
+	
+	//Esta função é diferente de conslutar DB pois ela preenche na tela os campos conforme a conta procurada
+ 	public boolean procurarConta(JLabel notFound, JTextField email, JTextField senha, DefaultTableModel table)
+	{
+		notFound.setVisible(false);
+		if (email.getText().equals(""))
+		{
+			JOptionPane.showInternalMessageDialog(null, "Digite um e-mail para prosseguir");			
+		}
+		else if (AtribRefDBConta.consultarDB(this) == null)
+			{
+				notFound.setVisible(true);
+				table.setRowCount(0);
+			}
+			else
+			{
+			email.setText(this.getEmail());
+			senha.setText(this.getSenha());	
+			table.setRowCount(0);
+			Jogo ObjJogo = new Jogo();
+			ObjJogo.listarDB("jogo", table, this.getIdJogo());
+			return true;
+			}		
+		return false;
+	}
 	
 }

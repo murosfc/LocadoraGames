@@ -1,6 +1,7 @@
 package objetos;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import manipularDB.DBCatPlat;
 
@@ -37,15 +38,17 @@ public class CatPlat {
 		if (nome.equals(""))
 		{
 			JOptionPane.showMessageDialog(null, "Digite o nome da "+tipo+" antes de submeter");
-		}
-		else if (AtribRefDBCatPlat.consultarDB(this, tipo) != null)
-		{
-			JOptionPane.showMessageDialog(null, "A " + tipo + " " + nome + " já está cadastrada");			
-		}
+		}		
 		else {
-			AtribRefDBCatPlat.incluirDB(this, tipo);
+			AtribRefDBCatPlat.incluirDB(this.getNome(), tipo);
 		}
 	}
+	
+	public void preecheTabelaCatPlat(DefaultTableModel tabela, String tipo)
+	{
+		AtribRefDBCatPlat.preecheTabelaCatPlat(tabela, tipo);
+	}
+	
 	public String[] listarDB(String tipo)
 	{
 		String[] lista = AtribRefDBCatPlat.listarDB(tipo);

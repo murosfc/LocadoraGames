@@ -21,6 +21,9 @@ import javax.swing.JLayeredPane;
 import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
+
+import objetos.PasswordHash;
+
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTabbedPane;
@@ -31,6 +34,7 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JSlider;
+import javax.swing.JToolBar;
 
 
 public class Telaprincipal extends JFrame{
@@ -40,12 +44,16 @@ public class Telaprincipal extends JFrame{
 	private JFrame frmGerenciadorDeLocadora;
 	private static String imgLink ="D:\\Documentos\\Escola\\Sistemas de Informa\u00E7\u00E3o\\Quarto per\u00EDodo\\Programa\u00E7\u00E3o Orientada a Objetos\\Locadora\\imagens\\wallpaper.jpg";
 	private JTextField textField;
+	private static JTabbedPane tabbedPane;
 	
+	public Telaprincipal(boolean setVisible) {
+		this.tabbedPane.setVisible(setVisible);		
+	}
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -76,7 +84,7 @@ public class Telaprincipal extends JFrame{
 		frmGerenciadorDeLocadora.getContentPane().setLayout(null);
 		frmGerenciadorDeLocadora.setResizable(false);
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(0, 0, 784, 561);
 		frmGerenciadorDeLocadora.getContentPane().add(tabbedPane);
 		
@@ -84,7 +92,16 @@ public class Telaprincipal extends JFrame{
 		new TabAddCatPlat (tabbedPane);
 		new TabAddFuncionario (tabbedPane);	
 		new TabAddConta (tabbedPane);
-		new TabUpdSenha (tabbedPane);
+		new TabUpdSenha (tabbedPane);	
+		
 
+	}
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public static void setTabbedPane(boolean status) {
+		tabbedPane.setVisible(status);
 	}	
 }

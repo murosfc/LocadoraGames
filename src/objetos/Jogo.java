@@ -6,16 +6,18 @@ import manipularDB.DBJogo;
 
 public class Jogo {
 	private String sku, titulo, imgurl;
+	private float valor;
 	private int idPlat;
 	
 	private DBJogo AtribRefDBJogo;
 	
-	public Jogo(String sku, String titulo, String url, int idPlat)
+	public Jogo(String sku, String titulo, String url, float valor, int idPlat)
 	{
 		this.sku = sku;
 		this.titulo = titulo;
 		this.imgurl = url;
-		this.idPlat = idPlat;
+		this.valor = valor;
+		this.idPlat = idPlat;		
 		
 		AtribRefDBJogo = new DBJogo();	
 		AtribRefDBJogo.conectarDB();
@@ -28,6 +30,14 @@ public class Jogo {
 		AtribRefDBJogo.conectarDB();
 	}
 
+	public float getValor() {
+		return valor;
+	}
+
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
+	
 	public String getSku() {
 		return sku;
 	}
@@ -72,6 +82,13 @@ public class Jogo {
 		AtribRefDBJogo.listarBD(tipo, tabela, id);
 	}
 	
+	public void incluirDB() {
+		AtribRefDBJogo.incluirDB(this);
+	}
+	
+	public int getId() {
+		return AtribRefDBJogo.getId(this);
+	}
 
 }
 

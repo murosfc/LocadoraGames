@@ -6,10 +6,14 @@ import java.sql.Statement;
 
 import javax.swing.table.DefaultTableModel;
 
+import objetos.Jogo;
+
 public class DBJogo extends Conexao{
 	
-	public void incluirDB(Object obj, String tipo) {
-				
+	public void incluirDB(Jogo ObjJogo) {
+		String incluirSQLQuery = "INSERT into jogo (sku, titulo, valor, imgurl, idPlataforma) VALUES ('"+ObjJogo.getSku()+"','"+ObjJogo.getTitulo()+"','"+ObjJogo.getValor()+
+				"','"+ObjJogo.getImgurl()+"','"+ObjJogo.getIdPlat()+"')";
+		super.inserirBD("jogo", incluirSQLQuery);
 	}
 	
 	public Object consultarDB(Object obj, String tipo) {
@@ -77,9 +81,21 @@ public class DBJogo extends Conexao{
 		
 	}
 	
-	//método não utilizado nesta classe
-	public String[] listarDB(String tipo) {		
-		return null;
+	public int getId(Jogo ObjJogo) {
+		String consultaSQLQuery = "SELECT id from jogo where titulo = '"+ObjJogo.getTitulo()+"' AND sku = '"+ObjJogo.getSku()+"'";
+		System.out.println("Query consulta jogo ="+consultaSQLQuery);
+		int id =0;
+		try
+		{
+			ResultSet result = super.consultarDB(consultaSQLQuery);
+			if (result.next()) {				
+				id = Integer.parseInt(result.getString("id"));
+				return id;
+			}			
+		} catch (SQLException e) {
+			System.err.println("Erro: "+e.getMessage());
+		}
+		return id;
 	}
-
+	
 }

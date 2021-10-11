@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -26,6 +28,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 import manipularDB.DBCatPlat;
 import objetos.CatPlat;
@@ -61,27 +64,30 @@ public class TabAddCatPlat {
 		categoria.setBounds(111, 30, 200, 20);
 		panel.add(categoria);
 		categoria.setColumns(50);		
-				
+		
+		DefaultTableModel defaultTableCat = new DefaultTableModel(new String[]{"id", "categoria"},0);
+		JTable TableCat = new JTable(defaultTableCat);
+		TableCat.getColumnModel().getColumn(0).setPreferredWidth(30);
+		TableCat.getColumnModel().getColumn(1).setPreferredWidth(195);
+		JScrollPane scrollCat = new JScrollPane(TableCat);
+		scrollCat.setBounds(86, 151, 225, 360);
+		scrollCat.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); //resolve bug da falta do repaint do scroll
 		CatPlat ObjCat = new CatPlat();
-		JScrollPane scrollPaneL2 = new JScrollPane();
-		JList listCat = new JList(ObjCat.listarDB("categoria"));
-		scrollPaneL2.setBounds(82, 151, 225, 360);
-		scrollPaneL2.setViewportView(listCat);
-		scrollPaneL2.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); //resolve bug da falta do repaint do scroll			
-		panel.add(scrollPaneL2);
+		ObjCat.preecheTabelaCatPlat(defaultTableCat, "categoria");
+		panel.add(scrollCat);
 		
 		JButton addCat = new JButton("");
 		addCat.setToolTipText("Cadastra Categoria");
 		addCat.setForeground(Color.LIGHT_GRAY);
 		addCat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/submitt.png")));
-		addCat.setBounds(155, 61, 52, 42);
+		addCat.setBounds(134, 61, 52, 42);
 		panel.add(addCat);
 		addCat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {		
 				CatPlat ObjCat = new CatPlat(categoria.getText());
 				ObjCat.incluirDB("categoria");
-				listCat.setListData(ObjCat.listarDB("categoria"));
+				ObjCat.preecheTabelaCatPlat(defaultTableCat, "categoria");				
 				categoria.setText("");
 				tabbedPane.repaint();	
 			}			
@@ -96,8 +102,9 @@ public class TabAddCatPlat {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				CatPlat ObjCat = new CatPlat();
-				ObjCat.exluirDB(getId((String) listCat.getSelectedValue()), "categoria");
-				listCat.setListData(ObjCat.listarDB("categoria"));
+				int id = Integer.parseInt(TableCat.getModel().getValueAt(TableCat.getSelectedRow(), 0).toString());
+				ObjCat.exluirDB(id, "categoria");
+				ObjCat.preecheTabelaCatPlat(defaultTableCat, "categoria");				
 				tabbedPane.repaint();	
 			}
 			
@@ -108,7 +115,7 @@ public class TabAddCatPlat {
 		clearCat.setToolTipText("Limpa a informa\u00E7\u00E3o digitada");
 		clearCat.setForeground(Color.LIGHT_GRAY);
 		clearCat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/reset.png")));
-		clearCat.setBounds(229, 61, 52, 42);
+		clearCat.setBounds(209, 61, 52, 42);
 		clearCat.addActionListener(new ActionListener() {
 
 			@Override
@@ -123,7 +130,7 @@ public class TabAddCatPlat {
 		JLabel lblNewLabel_1 = new JLabel("Categorias cadastradas");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(82, 126, 227, 14);
+		lblNewLabel_1.setBounds(86, 126, 225, 14);
 		panel.add(lblNewLabel_1);
 		
 		//Separador
@@ -144,16 +151,18 @@ public class TabAddCatPlat {
 		plataforma.setToolTipText("Digite a Plataforma");
 		plataforma.setBounds(507, 30, 200, 20);
 		panel.add(plataforma);
-		plataforma.setColumns(50);
-		
-		CatPlat ObjPlat=new CatPlat(); //Retorna cadastrados no BD
-		JScrollPane scrollPaneL1 = new JScrollPane();
-		JList listPlat = new JList(ObjPlat.listarDB("plataforma"));		
-		scrollPaneL1.setBounds(480, 151, 225, 360);
-		scrollPaneL1.setViewportView(listPlat);
-		scrollPaneL1.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); //resolve bug da falta do repaint do scroll		
-		//panel.add(listPlat);
-		panel.add(scrollPaneL1);	
+		plataforma.setColumns(50);		
+				
+		DefaultTableModel defaultTablePlat = new DefaultTableModel(new String[]{"id", "categoria"},0);
+		JTable TablePlat = new JTable(defaultTablePlat);
+		TablePlat.getColumnModel().getColumn(0).setPreferredWidth(30);
+		TablePlat.getColumnModel().getColumn(1).setPreferredWidth(195);
+		JScrollPane scrollPlat = new JScrollPane(TablePlat);
+		scrollPlat.setBounds(482, 151, 225, 360);
+		scrollPlat.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); //resolve bug da falta do repaint do scroll
+		CatPlat ObjPlat = new CatPlat();
+		ObjPlat.preecheTabelaCatPlat(defaultTablePlat, "plataforma");
+		panel.add(scrollPlat);
 		
 		JButton addPlat = new JButton("");
 		addPlat.setToolTipText("Cadastra Pataforma ");
@@ -165,7 +174,7 @@ public class TabAddCatPlat {
 			public void actionPerformed(ActionEvent e) {
 				CatPlat ObjPlat = new CatPlat (plataforma.getText());
 				ObjPlat.incluirDB("plataforma");
-				listPlat.setListData(ObjPlat.listarDB("plataforma"));
+				ObjPlat.preecheTabelaCatPlat(defaultTablePlat, "plataforma");
 				plataforma.setText("");
 				tabbedPane.repaint();
 			}
@@ -195,9 +204,10 @@ public class TabAddCatPlat {
 		removPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CatPlat ObjPlat = new CatPlat ();						
-				ObjPlat.exluirDB(getId((String) listPlat.getSelectedValue()), "plataforma");
-				listPlat.setListData(ObjPlat.listarDB("plataforma"));
+				CatPlat ObjPlat = new CatPlat ();
+				int id = Integer.parseInt(TablePlat.getValueAt(TablePlat.getSelectedRow(), 0).toString());
+				ObjPlat.exluirDB(id, "plataforma");
+				ObjPlat.preecheTabelaCatPlat(defaultTablePlat, "plataforma");
 				tabbedPane.repaint();
 			}
 			
@@ -207,7 +217,7 @@ public class TabAddCatPlat {
 		JLabel lblNewLabel_1_1 = new JLabel("Plataformas cadastradas");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_1.setBounds(480, 126, 227, 14);
+		lblNewLabel_1_1.setBounds(482, 126, 225, 14);
 		panel.add(lblNewLabel_1_1);			
 		
 		//imagem de fundo
@@ -216,16 +226,5 @@ public class TabAddCatPlat {
 		panel.add(background);	
 		
 		
-	}
-	//obtem a id o item a ser consultado no DB
-	private int getId(String platCat)
-	{
-		if (platCat != null)
-		{
-			String[] texto = platCat.split("-");
-			int id = Integer.parseInt(texto[0]);
-			return id;
-		}
-		else return -1;
 	}
 }

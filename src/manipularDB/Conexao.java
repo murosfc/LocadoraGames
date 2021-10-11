@@ -2,8 +2,11 @@ package manipularDB;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public abstract class Conexao 
@@ -40,7 +43,7 @@ public abstract class Conexao
 	}
 	
 	//operação para desconectar do BD	
-		public void shutDown()
+	public void shutDown()
 		{	try
 			{	con.close();	}
 			catch (SQLException sqlex)
@@ -49,13 +52,55 @@ public abstract class Conexao
 			}
 		}
 		
-		
-		
-		//operações abstratas para inclusão,consulta,exclusão e alteração no BD
-		//devem ser implementadas nas subclasses de Conexao
-		public abstract void incluirDB(Object obj, String tipo);
-		public abstract Object consultarDB(Object obj, String tipo );
-		public abstract String[] listarDB(String tipo);
-		public abstract void excluirDB(int id, String tipo);
-		public abstract boolean listarBD(String tipo, DefaultTableModel tabela, String busca); //para busca de tabela de jogos
+	//operação de inclusão, comum a todas as classes filhas
+	public void inserirBD (String nomeObjeto, String incluirSQL)
+	{
+		try
+        {   
+			Statement statement = getConnection().createStatement();        
+            
+        	int result = statement.executeUpdate(incluirSQL);
+            if (!nomeObjeto.equals("categoriajogo")){
+	        	if (result == 1)
+	            {   JOptionPane.showMessageDialog(null,"Entrada de dados na tabela " + nomeObjeto + " adicionada corretamente!","Mensagem de Informação",JOptionPane.INFORMATION_MESSAGE);}
+	            else
+	            {   JOptionPane.showMessageDialog(null,"Erro ao adicionar " + nomeObjeto,"Mensagem de Erro",JOptionPane.ERROR_MESSAGE);
+	            }
+	            statement.close();
+            }
+        }
+        catch (SQLException e)
+        { System.out.println("Erro "+e.getMessage()); }
+	}
+	
+	//operação de exclusão, comum a todas as classes filhas
+	public void excluirDB (String nomeObjeto, String excluirSQL)
+	{
+		try
+		{										
+			Statement statement = getConnection().createStatement();			
+			statement.executeUpdate(excluirSQL);
+			JOptionPane.showMessageDialog(null, "A entrada na tabela "+nomeObjeto+" foi excluída com sucesso");
+		}		
+		catch (SQLException e)
+		{
+			System.out.println("Erro: "+e.getMessage());
+		}
+	}
+	
+	//consulta simples para classes filhas retornando ResultSet
+	public ResultSet consultarDB (String consultaSQL) {
+		try
+		{
+			Statement statement = getConnection().createStatement();
+			ResultSet result = statement.executeQuery(consultaSQL);
+			return result;
+		}
+		catch (SQLException e)
+		{
+			System.out.println("Erro na cunsulta ao BD: "+e.getMessage());
+		}
+		return null;
+	}	
+	
 }
