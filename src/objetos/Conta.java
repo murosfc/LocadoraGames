@@ -55,6 +55,7 @@ public class Conta {
 		this.idJogo=idJogo;
 		disponivel=true;
 		AtribRefDBConta = new DBConta();
+		AtribRefDBConta.conectarDB();
 	}
 	
 	public Conta(String mail, String pass)
@@ -63,10 +64,12 @@ public class Conta {
 		senha=pass;		
 		disponivel=true;
 		AtribRefDBConta = new DBConta();
+		AtribRefDBConta.conectarDB();
 	}
 
 	public Conta() {
 		AtribRefDBConta = new DBConta();
+		AtribRefDBConta.conectarDB();
 	}
 	
 	//demais métodos	
@@ -96,6 +99,10 @@ public class Conta {
 	public void preecheTabelaPrioridades (DefaultTableModel tabela)
 	{
 		AtribRefDBConta.preecheTabelaPrioridades(tabela);
+	}
+	
+	public int quantidadePrioridadesAtualizarSenha() {
+		return AtribRefDBConta.quantidadePrioridadesAtualizarSenha();
 	}
 	
 	//Esta função é diferente de conslutar DB pois ela preenche na tela os campos conforme a conta procurada

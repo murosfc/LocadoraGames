@@ -137,7 +137,7 @@ public class TabAddFuncionario {
 		
 		JButton removerFuncionario = new JButton("");
 		removerFuncionario.setIcon(new ImageIcon(TabAddFuncionario.class.getResource("/imagens/del.png")));
-		removerFuncionario.setBounds(689, 484, 52, 42);
+		removerFuncionario.setBounds(687, 476, 52, 42);
 		removerFuncionario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

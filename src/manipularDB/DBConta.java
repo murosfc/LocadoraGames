@@ -164,4 +164,16 @@ public class DBConta extends Conexao{
 			System.err.println("Erro: "+e.getMessage());
 		}
 	}
+	
+	public int quantidadePrioridadesAtualizarSenha() {
+		try {
+			String consultaSQL = "select c.id, c.email, j.titulo, p.nome as plataforma, sum(CURDATE()- a.datafim) as prioridade from conta c JOIN jogo j ON c.idJogo = j.id JOIN plataforma p on j.idPlataforma = p.id JOIN aluguel a on c.id=a.idConta WHERE CURDATE()- a.datafim > 0 AND c.disponivel = 0 group by a.pedido order by prioridade desc";
+			ResultSet result = super.consultarDB(consultaSQL);
+			return result.getFetchSize();
+		}catch (SQLException e) {
+			System.err.println("Erro: "+e.getMessage());
+		}
+		return 0;
+	}
+	
 }

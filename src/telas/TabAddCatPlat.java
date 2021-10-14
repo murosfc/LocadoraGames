@@ -144,12 +144,12 @@ public class TabAddCatPlat {
 		JLabel lblNewLabel_2 = new JLabel("Plataforma");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(401, 32, 96, 14);
+		lblNewLabel_2.setBounds(390, 32, 96, 14);
 		panel.add(lblNewLabel_2);
 		
 		plataforma = new JTextField();
 		plataforma.setToolTipText("Digite a Plataforma");
-		plataforma.setBounds(507, 30, 200, 20);
+		plataforma.setBounds(494, 30, 200, 20);
 		panel.add(plataforma);
 		plataforma.setColumns(50);		
 				
@@ -158,7 +158,7 @@ public class TabAddCatPlat {
 		TablePlat.getColumnModel().getColumn(0).setPreferredWidth(30);
 		TablePlat.getColumnModel().getColumn(1).setPreferredWidth(195);
 		JScrollPane scrollPlat = new JScrollPane(TablePlat);
-		scrollPlat.setBounds(482, 151, 225, 360);
+		scrollPlat.setBounds(469, 151, 225, 360);
 		scrollPlat.getViewport().setScrollMode(JViewport.SIMPLE_SCROLL_MODE); //resolve bug da falta do repaint do scroll
 		CatPlat ObjPlat = new CatPlat();
 		ObjPlat.preecheTabelaCatPlat(defaultTablePlat, "plataforma");
@@ -168,7 +168,7 @@ public class TabAddCatPlat {
 		addPlat.setToolTipText("Cadastra Pataforma ");
 		addPlat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/submitt.png")));
 		addPlat.setForeground(Color.LIGHT_GRAY);
-		addPlat.setBounds(538, 61, 52, 42);
+		addPlat.setBounds(517, 61, 52, 42);
 		addPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +186,7 @@ public class TabAddCatPlat {
 		clearPlat.setToolTipText("Limpa a informa\u00E7\u00E3o digitada");
 		clearPlat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/reset.png")));
 		clearPlat.setForeground(Color.LIGHT_GRAY);
-		clearPlat.setBounds(614, 61, 52, 42);
+		clearPlat.setBounds(591, 61, 52, 42);
 		clearPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -200,7 +200,7 @@ public class TabAddCatPlat {
 		removPlat.setToolTipText("Apaga Plataforma selecionada");
 		removPlat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/del.png")));
 		removPlat.setForeground(Color.LIGHT_GRAY);
-		removPlat.setBounds(717, 469, 52, 42);
+		removPlat.setBounds(704, 469, 52, 42);
 		removPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -217,7 +217,7 @@ public class TabAddCatPlat {
 		JLabel lblNewLabel_1_1 = new JLabel("Plataformas cadastradas");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1_1.setBounds(482, 126, 225, 14);
+		lblNewLabel_1_1.setBounds(469, 126, 225, 14);
 		panel.add(lblNewLabel_1_1);			
 		
 		//imagem de fundo
