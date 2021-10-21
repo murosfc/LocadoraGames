@@ -174,7 +174,7 @@ public class TabAddJogo {
 		
 		JButton clear = new JButton("");
 		clear.setIcon(new ImageIcon(TabAddJogo.class.getResource("/imagens/reset.png")));
-		clear.setBounds(679, 404, 52, 42);
+		clear.setBounds(695, 466, 52, 42);
 		clear.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,7 +191,7 @@ public class TabAddJogo {
 		
 		JButton addJogo = new JButton("");
 		addJogo.setIcon(new ImageIcon(TabAddJogo.class.getResource("/imagens/submitt.png")));
-		addJogo.setBounds(610, 404, 52, 42);
+		addJogo.setBounds(633, 466, 52, 42);
 		addJogo.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -216,19 +216,7 @@ public class TabAddJogo {
 					JOptionPane.showMessageDialog(null, "Todos os campos devem estar preenchidos","Alerta",JOptionPane.WARNING_MESSAGE);
 				}
 			}});
-		tabJogo.add(addJogo);		
-			
-		JButton atualizaJogo = new JButton("Atualizar um jogo");
-		atualizaJogo.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		atualizaJogo.setBounds(610, 457, 121, 51);
-		atualizaJogo.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-							
-			}
-			
-		});
-		tabJogo.add(atualizaJogo);			
+		tabJogo.add(addJogo);
 		
 		//imagem de fundo	
 				JLabel background = new JLabel("");

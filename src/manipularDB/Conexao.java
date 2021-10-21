@@ -14,7 +14,7 @@ public abstract class Conexao
 	protected static Connection con;
 	protected static String user ="root";
 	protected static String DBUrl = "jdbc:mysql://localhost/db_locadora?serverTimezone=UTC";
-	protected static String pass = "abricó";
+	protected static String pass = "abricoh";	
 	
 	public static Connection getConnection()
 	{	return con;	}
@@ -44,8 +44,10 @@ public abstract class Conexao
 	
 	//operação para desconectar do BD	
 	public void shutDown()
-		{	try
-			{	con.close();	}
+		{	try	{	
+				con.close();
+				System.out.println("Desconectado do banco de dados");
+			}
 			catch (SQLException sqlex)
 			{	System.err.println("Impossível desconectar");
 			  	sqlex.printStackTrace();

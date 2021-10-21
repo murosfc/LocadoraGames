@@ -85,11 +85,10 @@ public class DBConta extends Conexao{
 		tabela.setRowCount(0);
 		try
         {   
-			Statement statement = getConnection().createStatement();
+			Statement statement = getConnection().createStatement();	
 			
-			//montagem da String SQL de consulta na tabela	
 			String mysqlQuery = "SELECT c.id, c.email, c.senha, j.titulo, p.nome as plataforma FROM conta c JOIN jogo j ON c.idJogo = j.id JOIN plataforma p ON j.idPlataforma = p.id WHERE c.email LIKE '%"+emailProcurado+"%'";
-			
+			System.out.println("procurado: "+emailProcurado);
             ResultSet result = statement.executeQuery(mysqlQuery);            
             if (!result.next())
             {
@@ -169,7 +168,11 @@ public class DBConta extends Conexao{
 		try {
 			String consultaSQL = "select c.id, c.email, j.titulo, p.nome as plataforma, sum(CURDATE()- a.datafim) as prioridade from conta c JOIN jogo j ON c.idJogo = j.id JOIN plataforma p on j.idPlataforma = p.id JOIN aluguel a on c.id=a.idConta WHERE CURDATE()- a.datafim > 0 AND c.disponivel = 0 group by a.pedido order by prioridade desc";
 			ResultSet result = super.consultarDB(consultaSQL);
-			return result.getFetchSize();
+			if (result != null) {
+				result.last();				
+				return result.getRow();
+			}
+			
 		}catch (SQLException e) {
 			System.err.println("Erro: "+e.getMessage());
 		}

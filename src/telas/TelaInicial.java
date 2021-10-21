@@ -6,6 +6,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,17 +41,22 @@ import javax.swing.BoxLayout;
 import javax.swing.JSlider;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.Font;
 
 
-public class Telaprincipal extends JFrame{
+public class TelaInicial extends JFrame{
+	private static final String[] versionAndDate = {"1.0","20-Out-2021"};
 	
 	private static final long serialVersionUID = 5786835960596750539L;
 
 	private JFrame frmGerenciadorDeLocadora;	
 	private  JTabbedPane tabbedPane;
 	
-	public Telaprincipal(boolean setVisible) {
+	private boolean mudaFonte =true;
+	
+	public TelaInicial(boolean setVisible) {
 		this.tabbedPane.setVisible(setVisible);		
 	}
 	
@@ -58,7 +67,7 @@ public class Telaprincipal extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Telaprincipal window = new Telaprincipal();
+					TelaInicial window = new TelaInicial();
 					window.frmGerenciadorDeLocadora.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -67,19 +76,14 @@ public class Telaprincipal extends JFrame{
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public Telaprincipal() {
+	
+	public TelaInicial(){
 		initialize();
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	
 	private void initialize() {
 		frmGerenciadorDeLocadora = new JFrame();
-		frmGerenciadorDeLocadora.setIconImage(Toolkit.getDefaultToolkit().getImage(Telaprincipal.class.getResource("/imagens/logo.png")));
+		frmGerenciadorDeLocadora.setIconImage(Toolkit.getDefaultToolkit().getImage(TelaInicial.class.getResource("/imagens/logo.png")));
 		frmGerenciadorDeLocadora.setTitle("Gerenciador de Locadora de games digitais");
 		frmGerenciadorDeLocadora.setBounds(100, 100, 795, 630);
 		frmGerenciadorDeLocadora.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,29 +115,55 @@ public class Telaprincipal extends JFrame{
 		panel.add(lblNewLabel_2);
 		
 		Conta ObjConta = new Conta();
-		int qtcontas = ObjConta.quantidadePrioridadesAtualizarSenha();
+		int qtcontas = ObjConta.quantidadePrioridadesAtualizarSenha();			
 		if (qtcontas > 0) {
 			String frase ="";
 			if (qtcontas==1) {
-				frase = "Atenção, existe "+qtcontas+" conta que precisa ter a senha atualizada!";				
-			} else {frase = "Atenção, existem "+qtcontas+" contas que precisam ter a senha atualizada!";}		
+				frase = "Atenção! Existe "+qtcontas+" conta que precisa ter a senha atualizada!";				
+			} else {frase = "Atenção! Existem "+qtcontas+" contas que precisam ter a senha atualizada!";}		
 			JLabel warning = new JLabel(frase);
 			warning.setHorizontalAlignment(SwingConstants.CENTER);
 			warning.setForeground(Color.RED);
-			warning.setFont(new Font("Times New Roman", Font.BOLD, 20));
+			warning.setFont(new Font("Times New Roman", Font.BOLD, 16));
 			warning.setBounds(10, 412, 753, 24);
-			panel.add(warning);	
-		}
+			panel.add(warning);			
+			final Runnable updater = new Runnable() {
+		        @Override
+		        public void run() {
+		        	if (mudaFonte) {
+		        		warning.setForeground(Color.GRAY);
+		        	} else warning.setForeground(Color.RED);		        	
+		        	mudaFonte = !mudaFonte;	
+		        }
+		    };
+		    ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
+		    executorService.scheduleAtFixedRate(new Runnable() {
+		        @Override
+		        public void run() {
+		            SwingUtilities.invokeLater(updater);
+		        }
+		    }, 1000, 1000, TimeUnit.MILLISECONDS);
+		}	
 		
 		JLabel icone = new JLabel("");
-		icone.setIcon(new ImageIcon(Telaprincipal.class.getResource("/imagens/logo.png")));
+		icone.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/logo.png")));
 		icone.setBounds(347, 100, 84, 115);
 		panel.add(icone);
 		
+		JLabel versao = new JLabel("Versão "+versionAndDate[0]);
+		versao.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		versao.setBounds(10, 517, 166, 14);
+		panel.add(versao);		
+		
+		JLabel lastUpdade = new JLabel("Última atualização "+versionAndDate[1]);
+		lastUpdade.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		lastUpdade.setBounds(10, 539, 166, 14);
+		panel.add(lastUpdade);
+		
 		JLabel backgroundInicial = new JLabel("");
-		backgroundInicial.setIcon(new ImageIcon(Telaprincipal.class.getResource("/imagens/background.png")));
+		backgroundInicial.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/background.png")));
 		backgroundInicial.setBounds(0, 0, 800, 575);
-		panel.add(backgroundInicial);		
+		panel.add(backgroundInicial);	
 		
 		//Abas
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -167,12 +197,12 @@ public class Telaprincipal extends JFrame{
 		addRemov.add(CatPlat);
 		
 		JMenuItem AddRemovCatPlat = new JMenuItem("Adicionar/Remover");
-		CatPlat.addActionListener(new ActionListener() {
+		AddRemovCatPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				tabbedPane.removeAll();
-				panel.setVisible(false);
-				new TabAddCatPlat (tabbedPane);
+				panel.setVisible(false);				
+				new TabAddCatPlat(tabbedPane);
 			}});
 		CatPlat.add(AddRemovCatPlat);
 		
@@ -210,7 +240,14 @@ public class Telaprincipal extends JFrame{
 			}});
 		Contas.add(AddRemovContas);
 		
-		JMenuItem UpdContas = new JMenuItem("Atualizar");
+		JMenuItem UpdContas = new JMenuItem("Atualizar");		
+		UpdContas.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.removeAll();
+				panel.setVisible(false);
+				new TabUpdConta (tabbedPane);				
+			}});
 		Contas.add(UpdContas);
 		
 		JMenuItem UpdSenhas = new JMenuItem("Atualizar Senha");
@@ -247,9 +284,6 @@ public class Telaprincipal extends JFrame{
 				JanelaFaturamento ObjFat = new JanelaFaturamento();				
 			}});
 		Relatorios.add(receita);
-		
-		
-		
-
 	}
+	
 }

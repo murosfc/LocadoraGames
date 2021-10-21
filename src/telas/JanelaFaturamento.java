@@ -1,15 +1,11 @@
 package telas;
 
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+
 import java.util.Date;
-import javax.swing.JFormattedTextField;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +16,6 @@ import com.toedter.calendar.JDateChooser;
 
 import manipularDB.DBAluguel;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
@@ -30,20 +25,23 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.Toolkit;
+import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
 
 public class JanelaFaturamento {
 
 	private JFrame frmRelatrioDeVendas;	
 	private JTable table;
 	private JTextField TextBoxTotalVendas;
+	private boolean showHide = true;
 
 	public JanelaFaturamento() {
 		frmRelatrioDeVendas = new JFrame();
 		frmRelatrioDeVendas.setIconImage(Toolkit.getDefaultToolkit().getImage(JanelaFaturamento.class.getResource("/imagens/logo.png")));
 		frmRelatrioDeVendas.setTitle("Relatório de vendas");
-		frmRelatrioDeVendas.setBounds(100, 100, 719, 297);
+		frmRelatrioDeVendas.setBounds(100, 100, 719, 340);
 		frmRelatrioDeVendas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+	
 		JPanel painel = new JPanel();
 		painel.setLayout(null);	
 		frmRelatrioDeVendas.getContentPane().add(painel);		
@@ -79,16 +77,35 @@ public class JanelaFaturamento {
 		scroll.setVisible(false);
 		
 		JLabel LabelTotalVendas = new JLabel("Total de vendas no período");
+		LabelTotalVendas.setHorizontalAlignment(SwingConstants.RIGHT);
 		LabelTotalVendas.setFont(new Font("Tahoma", Font.BOLD, 11));
-		LabelTotalVendas.setBounds(414, 23, 168, 14);
+		LabelTotalVendas.setBounds(247, 271, 168, 14);
 		LabelTotalVendas.setVisible(false);
 		painel.add(LabelTotalVendas);
 		
 		TextBoxTotalVendas = new JTextField();
-		TextBoxTotalVendas.setBounds(573, 17, 120, 20);
+		TextBoxTotalVendas.setBounds(423, 268, 120, 20);
 		painel.add(TextBoxTotalVendas);
 		TextBoxTotalVendas.setVisible(false);
 		TextBoxTotalVendas.setColumns(10);
+		
+		JButton imprimirRelatorio = new JButton("Imprimir relatório");
+		imprimirRelatorio.setBounds(553, 267, 140, 23);
+		imprimirRelatorio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				DefTab.addRow(new Object[] {"","","","","","Valor total =",TextBoxTotalVendas.getText()});
+				try {					
+					if (!table.print()) {
+				         System.err.println("Impressão cancelada pelo usuário");
+				     } 
+				 } catch (java.awt.print.PrinterException erro) {
+				     System.err.format("Impossível imprimir %s%n", erro.getMessage()); 
+				 }
+				DefTab.removeRow(DefTab.getRowCount()-1);
+			}});
+		imprimirRelatorio.setVisible(false);
+		painel.add(imprimirRelatorio);
 		
 		JButton gerarRelatorio = new JButton("Gerar Relatório");
 		gerarRelatorio.setBounds(299, 17, 105, 23);
@@ -99,16 +116,40 @@ public class JanelaFaturamento {
 				if (dtFinal.getDate().compareTo(dtInicial.getDate()) >=0 )
 				{
 					DefTab.setNumRows(0);
-					String fim = df.format(dtFinal.getDate());
-					String inicio = df.format(dtInicial.getDate());
-					DBAluguel OjbAluguel = new DBAluguel();
-					TextBoxTotalVendas.setText("R$ "+ String.format("%.2f",OjbAluguel.relatorioVendas(inicio, fim, DefTab)));
+					String fim ="full", inicio = "full";
+					if (showHide) {
+						fim = df.format(dtFinal.getDate());
+						inicio = df.format(dtInicial.getDate());
+					}
+					DBAluguel OjbAluguel = new DBAluguel();					
+					float total = OjbAluguel.relatorioVendas(inicio, fim, DefTab);					
+					TextBoxTotalVendas.setText("R$ "+ String.format("%.2f",total));					
 					scroll.setVisible(true);
 					LabelTotalVendas.setVisible(true);
 					TextBoxTotalVendas.setVisible(true);
+					imprimirRelatorio.setVisible(true);
 				}
 			}});
-		painel.add(gerarRelatorio);		
+		painel.add(gerarRelatorio);			
+		
+		JCheckBox chkBoxRelFull = new JCheckBox("Relatório completo");
+		chkBoxRelFull.setBounds(423, 17, 136, 23);
+		chkBoxRelFull.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				showHide = !showHide;
+				DefTab.setNumRows(0);
+				dtInicial.setEnabled(showHide);
+				dtFinal.setEnabled(showHide);				
+			}
+			
+		});
+		painel.add(chkBoxRelFull);
+		
+		JLabel lblNewLabel_2 = new JLabel("");
+		lblNewLabel_2.setIcon(new ImageIcon(JanelaFaturamento.class.getResource("/imagens/background.png")));
+		lblNewLabel_2.setBounds(-48, 0, 786, 301);
+		painel.add(lblNewLabel_2);
 		
 		frmRelatrioDeVendas.setVisible(true);
 		frmRelatrioDeVendas.repaint();		

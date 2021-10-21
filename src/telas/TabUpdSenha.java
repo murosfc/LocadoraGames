@@ -64,7 +64,7 @@ public class TabUpdSenha {
 		notFound.setVisible(false);
 		panel.add(notFound);		
 				
-		//tabela de pesquisa		
+		//tabela de pesquisa de contas		
 		DefaultTableModel table = new DefaultTableModel(new String[]{"id", "e-mail", "senha", "jogo", "plataforma"}, 0);
 		JTable tabela = new JTable (table);
 		tabela.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -110,8 +110,7 @@ public class TabUpdSenha {
 		procurarConta.setBounds(487, 22, 52, 42);
 		procurarConta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				notFound.setVisible(false);
-				table.setRowCount(0);
+				notFound.setVisible(false);				
 				Conta ObjConta = new Conta();
 				if (! ObjConta.preencheTabelaContaTrocarSenha(email.getText(), table)) //preenche a tabela de conta buscada	
 				{
