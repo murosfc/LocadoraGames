@@ -26,6 +26,7 @@ import javax.swing.table.TableModel;
 
 public class TabUpdConta {
 	private JTextField buscaJogo;
+	private int idParaAtualizar = 0;
 
 	public TabUpdConta(JTabbedPane tabbedPane) {
 		JPanel panel = new JPanel();
@@ -118,10 +119,27 @@ public class TabUpdConta {
 		ScroolTable.setBounds(60, 370, 670, 102);		
 		panel.add(ScroolTable);			
 
-		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(TabUpdConta.class.getResource("/imagens/up.png")));
-		btnNewButton.setBounds(693, 84, 37, 42);
-		panel.add(btnNewButton);		
+		JButton selecionaContaUpdate = new JButton("");
+		selecionaContaUpdate.setToolTipText("Secione uma conta e clique para editar");
+		selecionaContaUpdate.setIcon(new ImageIcon(TabUpdConta.class.getResource("/imagens/up.png")));
+		selecionaContaUpdate.setBounds(693, 84, 37, 42);
+		selecionaContaUpdate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					idParaAtualizar = Integer.parseInt(tabelaContas.getModel().getValueAt(tabelaContas.getSelectedRow(), 0).toString());
+					if (idParaAtualizar <=0) {
+						JOptionPane.showMessageDialog(null, "Você precisa selecionar uma conta para seguir com a atualização","Alerta",JOptionPane.WARNING_MESSAGE);
+					} else {
+						email.setText(tabelaContas.getModel().getValueAt(tabelaContas.getSelectedRow(), 1).toString());
+						senha.setText(tabelaContas.getModel().getValueAt(tabelaContas.getSelectedRow(), 2).toString());
+						System.out.println("id de conta selecionada para atualizar: "+ idParaAtualizar);
+					}
+				} catch (Exception erro) {
+					System.err.println("Erro: "+erro.getMessage());
+				}
+			}});
+		panel.add(selecionaContaUpdate);		
 		
 		JButton btnBuscaConta = new JButton("");
 		btnBuscaConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/busca.png")));
@@ -154,11 +172,11 @@ public class TabUpdConta {
 			}});		
 		panel.add(btnBuscarJogo);
 		
-		JButton addConta = new JButton("");
-		addConta.setToolTipText("Incluir conta");
-		addConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
-		addConta.setBounds(554, 483, 52, 42);
-		addConta.addActionListener(new ActionListener() {
+		JButton UpdConta = new JButton("");
+		UpdConta.setToolTipText("Incluir conta");
+		UpdConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
+		UpdConta.setBounds(554, 483, 52, 42);
+		UpdConta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//System.out.println(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString());
 				try {
@@ -176,7 +194,7 @@ public class TabUpdConta {
 					System.err.println("Erro: "+erro.getMessage());
 				}
 			}});
-		panel.add(addConta);
+		panel.add(UpdConta);
 		
 		JButton clear = new JButton("");
 		clear.setToolTipText("Limpar Campos");
@@ -185,9 +203,11 @@ public class TabUpdConta {
 		clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				table.setRowCount(0);
+				tableContas.setRowCount(0);
 				senha.setText("");
 				email.setText("");
 				contaProcurada.setText("");
+				idParaAtualizar = 0;
 			}});
 		panel.add(clear);		
 		
@@ -208,6 +228,7 @@ public class TabUpdConta {
 					  senha.setText("");
 					  email.setText("");
 					  contaProcurada.setText("");
+					  buscaJogo.setText("");
 					}
 				}				
 			}});

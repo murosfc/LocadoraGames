@@ -87,8 +87,7 @@ public class DBConta extends Conexao{
         {   
 			Statement statement = getConnection().createStatement();	
 			
-			String mysqlQuery = "SELECT c.id, c.email, c.senha, j.titulo, p.nome as plataforma FROM conta c JOIN jogo j ON c.idJogo = j.id JOIN plataforma p ON j.idPlataforma = p.id WHERE c.email LIKE '%"+emailProcurado+"%'";
-			System.out.println("procurado: "+emailProcurado);
+			String mysqlQuery = "SELECT c.id, c.email, c.senha, j.titulo, p.nome as plataforma FROM conta c JOIN jogo j ON c.idJogo = j.id JOIN plataforma p ON j.idPlataforma = p.id WHERE c.email LIKE '%"+emailProcurado+"%'";			
             ResultSet result = statement.executeQuery(mysqlQuery);            
             if (!result.next())
             {
