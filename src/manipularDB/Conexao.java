@@ -105,4 +105,18 @@ public abstract class Conexao
 		return null;
 	}	
 	
+	public void atualizarDB(String atualizarSQL)
+	{
+		try
+		{										
+			Statement statement = getConnection().createStatement();			
+			statement.executeUpdate(atualizarSQL);
+			JOptionPane.showMessageDialog(null, "Banco de dados atualizado com sucesso");
+		}		
+		catch (SQLException e)
+		{
+			System.out.println("Erro: "+e.getMessage());
+		}
+	}
+	
 }

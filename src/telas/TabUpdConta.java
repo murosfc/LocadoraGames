@@ -30,7 +30,7 @@ public class TabUpdConta {
 
 	public TabUpdConta(JTabbedPane tabbedPane) {
 		JPanel panel = new JPanel();
-		tabbedPane.addTab("Cadastrar Conta", null, panel, null);
+		tabbedPane.addTab("Atualizar Conta", null, panel, null);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("e-mail");
@@ -99,7 +99,7 @@ public class TabUpdConta {
 
 		//tabela de pesquisa de contas		
 		DefaultTableModel tableContas = new DefaultTableModel(new String[]{"id", "e-mail", "senha", "jogo", "plataforma"}, 0);
-		JTable tabelaContas = new JTable (tableContas);
+		JTable tabelaContas = new JTable (tableContas);		
 		tabelaContas.getColumnModel().getColumn(0).setPreferredWidth(30);
 		tabelaContas.getColumnModel().getColumn(1).setPreferredWidth(180);
 		tabelaContas.getColumnModel().getColumn(2).setPreferredWidth(100);
@@ -137,7 +137,7 @@ public class TabUpdConta {
 					}
 				} catch (Exception erro) {
 					System.err.println("Erro: "+erro.getMessage());
-				}
+				}				
 			}});
 		panel.add(selecionaContaUpdate);		
 		
@@ -151,8 +151,8 @@ public class TabUpdConta {
 				Conta ObjConta = new Conta();
 				if (! ObjConta.preencheTabelaContaTrocarSenha(contaProcurada.getText(), tableContas)) //preenche a tabela de conta buscada	
 				{
-					notFound.setVisible(true);					
-				}
+					notFound.setVisible(true);			
+				}				
 			}});
 		panel.add(btnBuscaConta);
 		
@@ -173,26 +173,31 @@ public class TabUpdConta {
 		panel.add(btnBuscarJogo);
 		
 		JButton UpdConta = new JButton("");
-		UpdConta.setToolTipText("Incluir conta");
+		UpdConta.setToolTipText("Atualizar conta");
 		UpdConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
 		UpdConta.setBounds(554, 483, 52, 42);
 		UpdConta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//System.out.println(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString());
+				int idJogo = 0;				
+				try { //verifica se será atualizado também um jogo
+					idJogo = Integer.parseInt(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString());					
+				}
+				catch (Exception erro) {
+					System.err.println("Nenhum jogo selecionado para atualização");
+				}
 				try {
-					if (!email.getText().equals("") && !senha.getText().equals("") && !tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString().equals(""))
-					{
-						
-						Conta ObjConta = new Conta(email.getText(), senha.getText(), Integer.parseInt(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString()));
-						ObjConta.incluirDB(ObjConta, "conta");
-						
+					if (!email.getText().equals("") && !senha.getText().equals(""))
+					{						
+						Conta ObjConta = new Conta(email.getText(), senha.getText(), idJogo);																		
+						ObjConta.atualizarDB(ObjConta, idParaAtualizar);						
 					}
 				}
 				catch (Exception erro)
 				{
-					JOptionPane.showMessageDialog(null, "Selecione um jogo para adicionar à conta","Mensagem de Erro",JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Você precisa selecionar uma conta para atualizar","Mensagem de Erro",JOptionPane.ERROR_MESSAGE);
 					System.err.println("Erro: "+erro.getMessage());
 				}
+				tabelaContas.setFocusable(false);
 			}});
 		panel.add(UpdConta);
 		
@@ -207,7 +212,7 @@ public class TabUpdConta {
 				senha.setText("");
 				email.setText("");
 				contaProcurada.setText("");
-				idParaAtualizar = 0;
+				idParaAtualizar = 0;				
 			}});
 		panel.add(clear);		
 		

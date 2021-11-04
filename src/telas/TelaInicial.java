@@ -174,7 +174,7 @@ public class TelaInicial extends JFrame{
 		menuBar.setBounds(0, 0, 784, 28);
 		frmGerenciadorDeLocadora.getContentPane().add(menuBar);
 		
-		JMenu addRemov = new JMenu("Adicionar/Remover");
+		JMenu addRemov = new JMenu("Ações");
 		menuBar.add(addRemov);
 		
 		JMenu Jogos = new JMenu("Jogos");
@@ -271,6 +271,7 @@ public class TelaInicial extends JFrame{
 				new TabAddFuncionario (tabbedPane);
 				new TabAddConta (tabbedPane);
 				new TabUpdSenha (tabbedPane);
+				new TabUpdConta (tabbedPane);
 			}});
 		addRemov.add(showAll);
 		

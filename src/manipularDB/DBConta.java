@@ -178,4 +178,16 @@ public class DBConta extends Conexao{
 		return 0;
 	}
 	
+	public void atualizarDB(Conta Obj, int idConta) {
+		String atualizarSQL;
+		if (Obj.getIdJogo()>0)
+		{
+			atualizarSQL = "UPDATE IGNORE conta set email='"+Obj.getEmail()+"', senha='"+Obj.getSenha()+"', idJogo="+Obj.getIdJogo()+" WHERE id="+idConta+"";			
+		}
+		else {
+			atualizarSQL = "UPDATE IGNORE conta set email='"+Obj.getEmail()+"', senha='"+Obj.getSenha()+"' WHERE id="+idConta+"";	
+		}
+		super.atualizarDB(atualizarSQL);
+	}
+	
 }

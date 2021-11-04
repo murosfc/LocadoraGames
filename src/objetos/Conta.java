@@ -105,6 +105,10 @@ public class Conta {
 		return AtribRefDBConta.quantidadePrioridadesAtualizarSenha();
 	}
 	
+	public void atualizarDB(Conta Obj, int idConta) {
+		AtribRefDBConta.atualizarDB(Obj, idConta);
+	}
+	
 	//Esta função é diferente de conslutar DB pois ela preenche na tela os campos conforme a conta procurada
  	public boolean procurarConta(JLabel notFound, JTextField email, JTextField senha, DefaultTableModel table)
 	{
