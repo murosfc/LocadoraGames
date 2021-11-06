@@ -108,7 +108,7 @@ public class JanelaFaturamento {
 		painel.add(imprimirRelatorio);
 		
 		JButton gerarRelatorio = new JButton("Gerar Relatório");
-		gerarRelatorio.setBounds(299, 17, 105, 23);
+		gerarRelatorio.setBounds(299, 17, 139, 23);
 		gerarRelatorio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -133,7 +133,7 @@ public class JanelaFaturamento {
 		painel.add(gerarRelatorio);			
 		
 		JCheckBox chkBoxRelFull = new JCheckBox("Relatório completo");
-		chkBoxRelFull.setBounds(423, 17, 136, 23);
+		chkBoxRelFull.setBounds(444, 17, 136, 23);
 		chkBoxRelFull.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

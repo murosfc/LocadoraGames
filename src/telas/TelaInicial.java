@@ -190,8 +190,15 @@ public class TelaInicial extends JFrame{
 			}});
 		Jogos.add(addRemovJogos);
 		
-		JMenuItem UpdJogos = new JMenuItem("Atualizar");
-		Jogos.add(UpdJogos);
+		JMenuItem UpdGame = new JMenuItem("Atualizar");
+		UpdGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.removeAll();
+				panel.setVisible(false);
+				new TabUpdGame(tabbedPane);				
+			}});
+		Jogos.add(UpdGame);
 		
 		JMenu CatPlat = new JMenu("Categorias e Plataformas");		
 		addRemov.add(CatPlat);
@@ -259,21 +266,6 @@ public class TelaInicial extends JFrame{
 				new TabUpdSenha (tabbedPane);
 			}});		
 		Contas.add(UpdSenhas);
-		
-		JMenuItem showAll = new JMenuItem("Mostrar todos");
-		showAll.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				tabbedPane.removeAll();
-				panel.setVisible(false);
-				new TabAddJogo(tabbedPane);	
-				new TabAddCatPlat (tabbedPane);
-				new TabAddFuncionario (tabbedPane);
-				new TabAddConta (tabbedPane);
-				new TabUpdSenha (tabbedPane);
-				new TabUpdConta (tabbedPane);
-			}});
-		addRemov.add(showAll);
 		
 		JMenu Relatorios = new JMenu("Relatórios");
 		menuBar.add(Relatorios);
