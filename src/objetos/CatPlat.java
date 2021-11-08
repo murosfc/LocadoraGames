@@ -32,6 +32,11 @@ public class CatPlat {
 		this.nome = nome;
 	}
 	
+	public int getId(String tipo)
+	{
+		return AtribRefDBCatPlat.getId(this, tipo);
+	}
+	
 	public void incluirDB(String tipo)
 	{
 		System.out.println("A "+ tipo + " " + nome + " será incluida no BD");
@@ -47,7 +52,8 @@ public class CatPlat {
 	public void preecheTabelaCatPlat(DefaultTableModel tabela, String tipo)
 	{
 		AtribRefDBCatPlat.preecheTabelaCatPlat(tabela, tipo);
-	}
+	}	
+	
 	
 	public String[] listarDB(String tipo)
 	{
@@ -65,6 +71,10 @@ public class CatPlat {
 		{
 			JOptionPane.showMessageDialog(null, "Selecione a " + tipo + " para exluir do BD");
 		}
+	}
+	
+	public int quantidadeCatPlatCadastrada(String tipo) {
+		return AtribRefDBCatPlat.quantidadeCatPlatCadastrada(tipo);
 	}
 	
 }

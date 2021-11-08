@@ -47,7 +47,7 @@ public class DBCatPlat extends Conexao {
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Erro tentar excluir "+ catplat +" do banco de dados. Erro: "+e);
+			System.err.println("Erro tentar excluir "+ catplat +" do banco de dados. Erro: "+e);
 		}
 	}		
 	
@@ -71,7 +71,7 @@ public class DBCatPlat extends Conexao {
 			System.err.println("Erro: "+e.getMessage());
 		}
 	}
-	
+		
 	//método eclusivo da classe listar conteúdo do DB dentro da lista para um JList
 	public String[] listarDB(String tipo)	{		
 		try
@@ -93,10 +93,38 @@ public class DBCatPlat extends Conexao {
 		}
 		 catch (SQLException e)	 
 		 {
-			 System.out.println("Erro ao obter dados de "+tipo+" do banco de dados. Erro: "+e);
+			 System.err.println("Erro ao obter dados de "+tipo+" do banco de dados. Erro: "+e);
 		 }		 
 		 return null;	
 	} 	
+	
+	public int quantidadeCatPlatCadastrada(String tipo) {
+		try
+		{			
+			String mysqlQuery = "SELECT * FROM "+ tipo;
+			ResultSet result = super.consultarDB(mysqlQuery);
+			result.last();
+			return result.getRow();
+		}
+		catch (SQLException e)	 
+		 {
+			 System.err.println("Erro ao obter dados de "+tipo+" do banco de dados. Erro: "+e);
+		 }		 
+		 return 0;
+	}
+	
+	public int getId(CatPlat Obj, String tipo) {
+		try {
+			String mysqlQuery = "SELECT id FROM "+tipo+" WHERE nome = '"+Obj.getNome()+"'";			
+			ResultSet result = super.consultarDB(mysqlQuery);
+			result.next();			
+			return Integer.parseInt(result.getString("id"));
+		}
+		catch (SQLException e) {
+			System.err.println("Erro ao obter dados de "+tipo+" do banco de dados. Erro: "+e);
+		}
+		return 0;
+	}
 }
             
         

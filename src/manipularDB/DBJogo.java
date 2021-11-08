@@ -53,10 +53,8 @@ public class DBJogo extends Conexao{
 		try
 		{
 			Statement statement = getConnection().createStatement();
-			String mySQLQuery = "SELECT j.id, j.titulo, p.nome as 'plataforma' FROM jogo j LEFT JOIN plataforma p on j.idPlataforma=p.id WHERE j.id="+id+"";
-			ResultSet result = statement.executeQuery(mySQLQuery);
-			System.out.println(mySQLQuery);
-			
+			String mySQLQuery = "SELECT j.id, j.titulo, p.nome as 'plataforma', j.sku, j.valor, j.imgurl FROM jogo j LEFT JOIN plataforma p on j.idPlataforma=p.id WHERE j.id="+id+"";
+			ResultSet result = statement.executeQuery(mySQLQuery);			
 			if (result.next())
 			{				
 				int idJogo;
@@ -66,7 +64,7 @@ public class DBJogo extends Conexao{
 				{
 					idJogo = Integer.parseInt(result.getString("id"));
 					titulo = result.getString("titulo");
-					plataforma = result.getString("plataforma");
+					plataforma = result.getString("plataforma");				
 					tabela.addRow(new Object[]{id,titulo, plataforma});
 				}				
 			}			
@@ -82,8 +80,7 @@ public class DBJogo extends Conexao{
 	}
 	
 	public int getId(Jogo ObjJogo) {
-		String consultaSQLQuery = "SELECT id from jogo where titulo = '"+ObjJogo.getTitulo()+"' AND sku = '"+ObjJogo.getSku()+"'";
-		System.out.println("Query consulta jogo ="+consultaSQLQuery);
+		String consultaSQLQuery = "SELECT id from jogo where titulo = '"+ObjJogo.getTitulo()+"' AND sku = '"+ObjJogo.getSku()+"'";		
 		int id =0;
 		try
 		{
@@ -98,4 +95,27 @@ public class DBJogo extends Conexao{
 		return id;
 	}
 	
+	public void getJogoFromDB(Jogo ObjJogo)
+	{
+		String consultaSQLQuery = "SELECT * from jogo where id = "+ObjJogo.getIdJogo()+"";
+		try
+		{
+			ResultSet result = super.consultarDB(consultaSQLQuery);
+			if (result.next()) {
+				ObjJogo.setIdJogo(Integer.parseInt(result.getString("id")));
+				ObjJogo.setSku(result.getString("sku"));
+				ObjJogo.setTitulo(result.getString("titulo"));
+				ObjJogo.setValor(Float.parseFloat(result.getString("valor")));
+				ObjJogo.setImgurl(result.getString("imgurl"));
+				ObjJogo.setIdPlat(Integer.parseInt(result.getString("idPlataforma")));				
+			}	
+		}
+		catch (SQLException e) {
+			System.err.println("Erro: "+e.getMessage());
+		}
+	}
+	public void atualizarDB(Jogo ObjJogo) {
+		String atualizarSQLQuery = "UPDATE IGNORE jogo SET sku='"+ObjJogo.getSku()+"', titulo='"+ObjJogo.getTitulo()+"', valor="+ObjJogo.getValor()+", imgurl='"+ObjJogo.getImgurl()+"', idplataforma="+ObjJogo.getIdPlat()+" WHERE id="+ObjJogo.getIdJogo();
+		super.atualizarDB(atualizarSQLQuery);		
+	}
 }

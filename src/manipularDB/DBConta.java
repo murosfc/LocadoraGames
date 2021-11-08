@@ -51,12 +51,12 @@ public class DBConta extends Conexao{
             }
             else 
             {
-            	System.out.println("A conta com e-mail " + ObjConta.getEmail() + " não foi encontrada");
+            	System.err.println("A conta com e-mail " + ObjConta.getEmail() + " não foi encontrada");
             	ObjConta=null;
             }            
         }
 		catch (SQLException e)
-		{ System.out.println("Erro: "+e.getMessage()); }		
+		{ System.err.println("Erro: "+e.getMessage()); }		
 		return ObjConta;
 	} 
 
@@ -77,7 +77,7 @@ public class DBConta extends Conexao{
 		}
 		catch (SQLException e)
 		{
-			System.out.println("Erro: "+e.getMessage());
+			System.err.println("Erro: "+e.getMessage());
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class DBConta extends Conexao{
             statement.close();
         }
 		catch (SQLException e)
-		{ System.out.println("Erro: "+e.getMessage());}
+		{ System.err.println("Erro: "+e.getMessage());}
 		return true;
 	}	
 	
@@ -137,7 +137,7 @@ public class DBConta extends Conexao{
             statement.close();
         }
 		catch (SQLException e)
-		{ System.out.println("Erro: "+e.getMessage());}
+		{ System.err.println("Erro: "+e.getMessage());}
 	}
 
 	public void preecheTabelaPrioridades (DefaultTableModel tabela)

@@ -82,7 +82,10 @@ public abstract class Conexao
 		{										
 			Statement statement = getConnection().createStatement();			
 			statement.executeUpdate(excluirSQL);
-			JOptionPane.showMessageDialog(null, "A entrada na tabela "+nomeObjeto+" foi excluída com sucesso");
+			if (! nomeObjeto.equals("none"))
+			{
+				JOptionPane.showMessageDialog(null, "A entrada na tabela "+nomeObjeto+" foi excluída com sucesso");
+			}			
 		}		
 		catch (SQLException e)
 		{

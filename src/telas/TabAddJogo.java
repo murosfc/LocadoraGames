@@ -202,7 +202,7 @@ public class TabAddJogo {
 					} else {
 						String idTexto = comboBox.getSelectedItem().toString();
 						int idPlataforma = Integer.parseInt(idTexto.substring(0,1));						
-						Jogo ObjJogo = new Jogo (sku.getText(), titulo.getText(), imgurl.getText(), Float.parseFloat(valor.getText()), idPlataforma);
+						Jogo ObjJogo = new Jogo (0, sku.getText(), titulo.getText(), imgurl.getText(), Float.parseFloat(valor.getText()), idPlataforma);
 						ObjJogo.incluirDB();						
 						CategoriaJogo ObjCatJogo = new CategoriaJogo(0,ObjJogo.getId());
 						for (int i=0; i<qtCatSelec; i++) {							
