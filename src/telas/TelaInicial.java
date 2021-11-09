@@ -178,9 +178,11 @@ public class TelaInicial extends JFrame{
 		menuBar.add(addRemov);
 		
 		JMenu Jogos = new JMenu("Jogos");
+		Jogos.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuGame10x10.png")));
 		addRemov.add(Jogos);
 		
-		JMenuItem addRemovJogos = new JMenuItem("Adicionar/Remover");
+		JMenuItem addRemovJogos = new JMenuItem("Adicionar");
+		addRemovJogos.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/AddMenu10x10.png")));
 		addRemovJogos.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -191,6 +193,7 @@ public class TelaInicial extends JFrame{
 		Jogos.add(addRemovJogos);
 		
 		JMenuItem UpdGame = new JMenuItem("Atualizar");
+		UpdGame.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		UpdGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -201,9 +204,11 @@ public class TelaInicial extends JFrame{
 		Jogos.add(UpdGame);
 		
 		JMenu CatPlat = new JMenu("Categorias e Plataformas");		
+		CatPlat.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuConsole10x10.png")));
 		addRemov.add(CatPlat);
 		
-		JMenuItem AddRemovCatPlat = new JMenuItem("Adicionar/Remover");
+		JMenuItem AddRemovCatPlat = new JMenuItem("Adicionar");
+		AddRemovCatPlat.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/AddMenu10x10.png")));
 		AddRemovCatPlat.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -214,12 +219,15 @@ public class TelaInicial extends JFrame{
 		CatPlat.add(AddRemovCatPlat);
 		
 		JMenuItem UpdCatPlat = new JMenuItem("Atualizar");
+		UpdCatPlat.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		CatPlat.add(UpdCatPlat);
 		
 		JMenu Funcionarios = new JMenu("Fucionários");
+		Funcionarios.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUser10x10.png")));
 		addRemov.add(Funcionarios);
 		
-		JMenuItem AddRemovFunc = new JMenuItem("Adicionar/Remover");
+		JMenuItem AddRemovFunc = new JMenuItem("Adicionar");
+		AddRemovFunc.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/AddMenu10x10.png")));
 		AddRemovFunc.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -232,12 +240,15 @@ public class TelaInicial extends JFrame{
 		Funcionarios.add(AddRemovFunc);
 		
 		JMenuItem UpdFunc = new JMenuItem("Atualizar");
+		UpdFunc.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		Funcionarios.add(UpdFunc);
 		
 		JMenu Contas = new JMenu("Contas");
+		Contas.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/ManuMail10x10.png")));
 		addRemov.add(Contas);
 		
-		JMenuItem AddRemovContas = new JMenuItem("Adicionar/Remover");
+		JMenuItem AddRemovContas = new JMenuItem("Adicionar");
+		AddRemovContas.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/AddMenu10x10.png")));
 		AddRemovContas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -248,6 +259,7 @@ public class TelaInicial extends JFrame{
 		Contas.add(AddRemovContas);
 		
 		JMenuItem UpdContas = new JMenuItem("Atualizar");		
+		UpdContas.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		UpdContas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -258,6 +270,7 @@ public class TelaInicial extends JFrame{
 		Contas.add(UpdContas);
 		
 		JMenuItem UpdSenhas = new JMenuItem("Atualizar Senha");
+		UpdSenhas.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuPassword10x10.png")));
 		UpdSenhas.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -271,6 +284,7 @@ public class TelaInicial extends JFrame{
 		menuBar.add(Relatorios);
 		
 		JMenuItem receita = new JMenuItem("Aluguéis por período");
+		receita.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuRelatorio10x10.png")));
 		receita.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
