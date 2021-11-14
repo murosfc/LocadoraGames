@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 public abstract class Conexao 
 {

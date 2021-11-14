@@ -112,7 +112,7 @@ public class TabAddCatPlat {
 		panel.add(removCat);
 		
 		JButton clearCat = new JButton("");
-		clearCat.setToolTipText("Limpa a informa\u00E7\u00E3o digitada");
+		clearCat.setToolTipText("Limpa a informação digitada");
 		clearCat.setForeground(Color.LIGHT_GRAY);
 		clearCat.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/reset.png")));
 		clearCat.setBounds(209, 61, 52, 42);
@@ -153,7 +153,7 @@ public class TabAddCatPlat {
 		panel.add(plataforma);
 		plataforma.setColumns(50);		
 				
-		DefaultTableModel defaultTablePlat = new DefaultTableModel(new String[]{"id", "categoria"},0);
+		DefaultTableModel defaultTablePlat = new DefaultTableModel(new String[]{"id", "plataforma"},0);
 		JTable TablePlat = new JTable(defaultTablePlat);
 		TablePlat.getColumnModel().getColumn(0).setPreferredWidth(30);
 		TablePlat.getColumnModel().getColumn(1).setPreferredWidth(195);

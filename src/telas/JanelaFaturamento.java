@@ -84,6 +84,7 @@ public class JanelaFaturamento {
 		painel.add(LabelTotalVendas);
 		
 		TextBoxTotalVendas = new JTextField();
+		TextBoxTotalVendas.setEditable(false);
 		TextBoxTotalVendas.setBounds(423, 268, 120, 20);
 		painel.add(TextBoxTotalVendas);
 		TextBoxTotalVendas.setVisible(false);
