@@ -1,12 +1,10 @@
 package objetos;
 
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 import manipularDB.DBCatPlat;
 
 public class CatPlat {
-	private int id =0;
 	private String nome;
 	
 	//atributo de referencia para DBCatPlat
@@ -24,7 +22,6 @@ public class CatPlat {
 		AtribRefDBCatPlat = new DBCatPlat();		
 		AtribRefDBCatPlat.conectarDB();
 	}
-	
 
 	public String getNome() {
 		return nome;
@@ -34,30 +31,21 @@ public class CatPlat {
 		this.nome = nome;
 	}
 	
-	public int getId(String tipo)
-	{
-		this.id = AtribRefDBCatPlat.getId(this, tipo);
-		return this.id;
-	}
-	
 	public void incluirDB(String tipo)
 	{
 		System.out.println("A "+ tipo + " " + nome + " será incluida no BD");
 		if (nome.equals(""))
 		{
 			JOptionPane.showMessageDialog(null, "Digite o nome da "+tipo+" antes de submeter");
-		}		
+		}
+		else if (AtribRefDBCatPlat.consultarDB(this, tipo) != null)
+		{
+			JOptionPane.showMessageDialog(null, "A " + tipo + " " + nome + " já está cadastrada");			
+		}
 		else {
-			AtribRefDBCatPlat.incluirDB(this.getNome(), tipo);
+			AtribRefDBCatPlat.incluirDB(this, tipo);
 		}
 	}
-	
-	public void preecheTabelaCatPlat(DefaultTableModel tabela, String tipo)
-	{
-		AtribRefDBCatPlat.preecheTabelaCatPlat(tabela, tipo);
-	}	
-	
-	
 	public String[] listarDB(String tipo)
 	{
 		String[] lista = AtribRefDBCatPlat.listarDB(tipo);
@@ -74,15 +62,6 @@ public class CatPlat {
 		{
 			JOptionPane.showMessageDialog(null, "Selecione a " + tipo + " para exluir do BD");
 		}
-	}
-	
-	public int quantidadeCatPlatCadastrada(String tipo) {
-		return AtribRefDBCatPlat.quantidadeCatPlatCadastrada(tipo);
-	}
-	
-	public void atualizarCatPlat(String tipo)
-	{
-		AtribRefDBCatPlat.atualizarCatPlat(this.id, this.nome, tipo);
 	}
 	
 }

@@ -84,7 +84,8 @@ public class TabAddConta {
 		tabela.getColumnModel().getColumn(1).setPreferredWidth(400);
 		tabela.getColumnModel().getColumn(2).setPreferredWidth(200);		
 		JScrollPane ScroolTable = new JScrollPane(tabela);
-		ScroolTable.setBounds(69, 174, 660, 266);		
+		ScroolTable.setBounds(69, 174, 660, 266);
+		//tabela.setBackground(new Color(255, 255, 255, 125));
 		panel.add(ScroolTable);
 		
 		JButton buscarJogo = new JButton("");
@@ -103,11 +104,11 @@ public class TabAddConta {
 			}});
 		panel.add(buscarJogo);
 		
-		JButton addConta = new JButton("");
-		addConta.setToolTipText("Incluir conta");
-		addConta.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
-		addConta.setBounds(492, 467, 52, 42);
-		addConta.addActionListener(new ActionListener() {
+		JButton add = new JButton("");
+		add.setToolTipText("Incluir conta");
+		add.setIcon(new ImageIcon(TabAddConta.class.getResource("/imagens/submitt.png")));
+		add.setBounds(492, 467, 52, 42);
+		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//System.out.println(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString());
 				try {
@@ -116,7 +117,6 @@ public class TabAddConta {
 						
 						Conta ObjConta = new Conta(email.getText(), senha.getText(), Integer.parseInt(tabela.getModel().getValueAt(tabela.getSelectedRow(), 0).toString()));
 						ObjConta.incluirDB(ObjConta, "conta");
-						
 					}
 				}
 				catch (Exception erro)
@@ -125,7 +125,7 @@ public class TabAddConta {
 					System.err.println("Erro: "+erro.getMessage());
 				}
 			}});
-		panel.add(addConta);
+		panel.add(add);
 		
 		JButton clear = new JButton("");
 		clear.setToolTipText("Limpar Campos");
@@ -146,13 +146,13 @@ public class TabAddConta {
 		excluir.setBounds(678, 467, 52, 42);
 		excluir.addActionListener(new ActionListener() {			
 			public void actionPerformed(ActionEvent e) {
-				Conta ObjConta = new Conta(email.getText(), senha.getText());
-				if (ObjConta.procurarConta(notFound, email, senha, table))
+				if (consultarConta(notFound, email, senha, table))
 				{
-					int opcaoSelecionada = JOptionPane.showConfirmDialog (null, "Tem certeza que quer excluir a conta com e-mail: "+email.getText()+"?","Aviso",JOptionPane.YES_NO_OPTION);
+					int opcaoSelecionada = JOptionPane.showConfirmDialog (null, "Tem certeza que quer excluir a conta com e-mail: "+email.getText()+"?","Warning",JOptionPane.YES_NO_OPTION);
 					if(opcaoSelecionada == JOptionPane.YES_OPTION)
-					{					  
-					  ObjConta.excluirDB();
+					{
+					  Conta ObjConta = new Conta(email.getText(), senha.getText());
+					  ObjConta.excluirDB("conta");
 					  table.setRowCount(0);
 					  senha.setText("");
 					  email.setText("");
@@ -168,8 +168,7 @@ public class TabAddConta {
 		buscarConta.setBounds(616, 467, 52, 42);
 		buscarConta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Conta ObjConta = new Conta(email.getText(), senha.getText());
-				ObjConta.procurarConta(notFound, email, senha, table);				
+				consultarConta(notFound, email, senha, table);
 				}});
 		panel.add(buscarConta);
 		
@@ -178,6 +177,34 @@ public class TabAddConta {
 		background.setIcon(new ImageIcon(TabAddCatPlat.class.getResource("/imagens/background.png")));
 		background.setBounds(0, 0, 779, 553);
 		panel.add(background);
-	}	
+	}
+	
+	//método para buscar conta já cadastrada
+	private boolean consultarConta(JLabel notFound, JTextField email, JTextField senha, DefaultTableModel table)
+	{
+		notFound.setVisible(false);
+		if (email.getText().equals(""))
+		{
+			JOptionPane.showInternalMessageDialog(null, "Digite um e-mail para prosseguir");			
+		}
+		else {
+			Conta ObjConta = new Conta (email.getText(), senha.getText());		
+			if (ObjConta.consultarDB() == null)
+			{
+				notFound.setVisible(true);				
+			}
+			else
+			{
+			email.setText(ObjConta.getEmail());
+			senha.setText(ObjConta.getSenha());	
+			table.setRowCount(0);
+			Jogo ObjJogo = new Jogo();
+			ObjJogo.listarDB("jogo", table, ObjConta.getIdJogo());
+			return true;
+			}
+		}
+		return false;
+	}
+	
 }
 
