@@ -150,12 +150,12 @@ public class TelaInicial extends JFrame{
 		icone.setBounds(347, 100, 84, 115);
 		panel.add(icone);
 		
-		JLabel versao = new JLabel("Versão "+versionAndDate[0]);
+		JLabel versao = new JLabel("Vers\u00E3o 1.0.1");
 		versao.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		versao.setBounds(10, 517, 166, 14);
 		panel.add(versao);		
 		
-		JLabel lastUpdade = new JLabel("Última atualização "+versionAndDate[1]);
+		JLabel lastUpdade = new JLabel("\u00DAltima atualiza\u00E7\u00E3o 26-Nov-2021");
 		lastUpdade.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		lastUpdade.setBounds(10, 539, 166, 14);
 		panel.add(lastUpdade);
@@ -221,6 +221,13 @@ public class TelaInicial extends JFrame{
 		JMenuItem UpdCatPlat = new JMenuItem("Atualizar");
 		UpdCatPlat.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		CatPlat.add(UpdCatPlat);
+		UpdCatPlat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.removeAll();
+				panel.setVisible(false);				
+				new TabUpdCatPlat(tabbedPane);				
+			}});
 		
 		JMenu Funcionarios = new JMenu("Fucionários");
 		Funcionarios.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUser10x10.png")));
@@ -242,6 +249,14 @@ public class TelaInicial extends JFrame{
 		JMenuItem UpdFunc = new JMenuItem("Atualizar");
 		UpdFunc.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/MenuUpd10x10.png")));
 		Funcionarios.add(UpdFunc);
+		UpdFunc.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.removeAll();
+				panel.setVisible(false);
+				new TabUpdFuncionario (tabbedPane);				
+			}			
+		});
 		
 		JMenu Contas = new JMenu("Contas");
 		Contas.setIcon(new ImageIcon(TelaInicial.class.getResource("/imagens/ManuMail10x10.png")));

@@ -125,6 +125,11 @@ public class DBCatPlat extends Conexao {
 		}
 		return 0;
 	}
+	
+	public void atualizarCatPlat(int id, String descricao, String tipo) {
+		String mysqlQuery = "UPDATE "+tipo+" set nome = '"+descricao+"' WHERE id = "+id;		
+		super.atualizarDB(mysqlQuery);
+	}
 }
             
         

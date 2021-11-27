@@ -6,6 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import manipularDB.DBCatPlat;
 
 public class CatPlat {
+	private int id =0;
 	private String nome;
 	
 	//atributo de referencia para DBCatPlat
@@ -23,6 +24,7 @@ public class CatPlat {
 		AtribRefDBCatPlat = new DBCatPlat();		
 		AtribRefDBCatPlat.conectarDB();
 	}
+	
 
 	public String getNome() {
 		return nome;
@@ -34,7 +36,8 @@ public class CatPlat {
 	
 	public int getId(String tipo)
 	{
-		return AtribRefDBCatPlat.getId(this, tipo);
+		this.id = AtribRefDBCatPlat.getId(this, tipo);
+		return this.id;
 	}
 	
 	public void incluirDB(String tipo)
@@ -75,6 +78,11 @@ public class CatPlat {
 	
 	public int quantidadeCatPlatCadastrada(String tipo) {
 		return AtribRefDBCatPlat.quantidadeCatPlatCadastrada(tipo);
+	}
+	
+	public void atualizarCatPlat(String tipo)
+	{
+		AtribRefDBCatPlat.atualizarCatPlat(this.id, this.nome, tipo);
 	}
 	
 }

@@ -1,21 +1,13 @@
 package telas;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
-import javax.swing.ListModel;
 
-import java.awt.Insets;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,27 +15,19 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-import manipularDB.DBCatPlat;
 import objetos.CatPlat;
 
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.JSeparator;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 public class TabAddCatPlat {
 	private JTextField categoria;
 	private final JLabel background = new JLabel("");
 	private JTextField plataforma;
-	private String[] listaPlat;
 
 	public TabAddCatPlat(JTabbedPane tabbedPane) {
 		

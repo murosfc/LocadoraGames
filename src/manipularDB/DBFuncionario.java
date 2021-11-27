@@ -23,7 +23,7 @@ public class DBFuncionario extends Conexao {
 			}
 			else {
 				String incluirSQL = "INSERT INTO funcionario (nickname, email, whatsapp, senha) VALUES ('"+ObjFunc.getNickname()+"','"+ObjFunc.getEmail()+"','"+ObjFunc.getWhatsapp()+
-						"','"+PasswordHash.getHashMd5(ObjFunc.getSenha())+"')";
+						"','"+ObjFunc.getSenha()+"')";
 			  	super.inserirBD("funcionario", incluirSQL);}
 			}
 		catch (SQLException e) {
@@ -57,5 +57,11 @@ public class DBFuncionario extends Conexao {
 	public void excluirDB(int matricula) {
 		String excluirSQL = "DELETE FROM funcionario WHERE matricula ='"+matricula+"'";
 		super.excluirDB("funcionario", excluirSQL);		
+	}
+	
+	public ResultSet getFuncionarioFromId(int id) {
+		String consultaSQL = "SELECT * FROM funcionario WHERE matricula= "+id;
+		ResultSet result = super.consultarDB(consultaSQL);
+		return result;
 	}
 }
