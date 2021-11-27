@@ -1,5 +1,0 @@
-INDEX VERSION 1.131+D:\Sistemas de informação\Quarto período\Programação Orientada a Objetos\Locadora\.metadata\.plugins\org.eclipse.jdt.core
-1028447683.index
-4062912571.index
-2346895512.index
-1630872600.index
