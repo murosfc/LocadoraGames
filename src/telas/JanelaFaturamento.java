@@ -141,9 +141,12 @@ public class JanelaFaturamento {
 				showHide = !showHide;
 				DefTab.setNumRows(0);
 				dtInicial.setEnabled(showHide);
-				dtFinal.setEnabled(showHide);				
-			}
-			
+				dtFinal.setEnabled(showHide);
+				if (!showHide) {
+					dtFinal.setCalendar(null);
+					dtInicial.setCalendar(null);
+				} 				
+			}			
 		});
 		painel.add(chkBoxRelFull);
 		
