@@ -120,20 +120,27 @@ public class DBConta extends Conexao{
 		try
         {   
 			Statement statement = getConnection().createStatement();
-				
-			String mysqlQuery = "UPDATE conta SET senha = '"+senha+"' WHERE id="+idConta+""; 
 			
-            int result = statement.executeUpdate(mysqlQuery); 
-            
-            if (result == 1)
+			String testeSenha = "SELECT verificaSenhaAntiga('"+senha+"', "+idConta+") as valida";
+			ResultSet resultSenha = super.consultarDB(testeSenha);
+			if (resultSenha.next() && resultSenha.getString("valida").equals("0")) {				
+				String mysqlQuery = "UPDATE conta SET senha = '"+senha+"' WHERE id="+idConta+""; 
+				
+	            int result = statement.executeUpdate(mysqlQuery); 
+	            
+	            if (result == 1)
+	            {
+	            	statement.executeUpdate("UPDATE conta SET disponivel = 1 WHERE id="+idConta+"");
+	            	JOptionPane.showMessageDialog(null, "Senha atualizada com sucesso! ","Mensagem de confirmação", JOptionPane.INFORMATION_MESSAGE);
+	            }
+	            else
+	            {
+	            	JOptionPane.showMessageDialog(null, "Ocorreu um erro desconhecido na atualização da senha.\nContate o administrador ","Mensagem de erro", JOptionPane.ERROR_MESSAGE);
+	            }    
+			}else
             {
-            	statement.executeUpdate("UPDATE conta SET disponivel = 1 WHERE id="+idConta+"");
-            	JOptionPane.showMessageDialog(null, "Senha atualizada com sucesso! ","Mensagem de confirmação", JOptionPane.INFORMATION_MESSAGE);
-            }
-            else
-            {
-            	JOptionPane.showMessageDialog(null, "Ocorreu um erro desconhecido na atualização da senha.\nContate o administrador ","Mensagem de erro", JOptionPane.ERROR_MESSAGE);
-            }            
+            	JOptionPane.showMessageDialog(null, "A nova senha já foi utilizada anteriormente, tente outra ","Mensagem de erro", JOptionPane.ERROR_MESSAGE);
+            }   
             statement.close();
         }
 		catch (SQLException e)
